@@ -1,7 +1,7 @@
 import isInt from '../helpers/isInt';
 
 const Ship = (length) => {
-  if (!length) {
+  if (length === undefined) {
     throw new Error(
       'No arguments specified. Needs to have a "length" argument'
     );
@@ -19,7 +19,7 @@ const Ship = (length) => {
   })();
 
   const hit = (index) => {
-    if (!index) {
+    if (index === undefined) {
       throw new Error(
         'No arguments specified. Needs to have a "index" argument'
       );
@@ -34,6 +34,7 @@ const Ship = (length) => {
         'index attribute cannot be greater then Ship object length attribute'
       );
     }
+    hitBox[index] = 1;
   };
 
   const isSunk = () => {};

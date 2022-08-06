@@ -82,6 +82,11 @@ test('hit method throws error if no argument specified', () => {
   expect(() => object.hit()).toThrow();
 });
 
+test('hit method doesnt throw error if index argument is equal 0', () => {
+  const object = Ship(4);
+  expect(() => object.hit(0)).not.toThrow();
+});
+
 test('hit method throws error if first argument is not a integer', () => {
   const object = Ship(4);
   expect(() => object.hit(null)).toThrow();
@@ -105,6 +110,7 @@ test('hit method changes specified index of hitBox to 1', () => {
   expect(ship.hitBox[1]).toBe(0);
   expect(ship.hitBox[2]).toBe(1);
   expect(ship.hitBox[3]).toBe(0);
+
   shipTwo.hit(0);
   shipTwo.hit(1);
   expect(shipTwo.hitBox[0]).toBe(1);
