@@ -16,6 +16,10 @@ const Ship = (length) => {
     for (let i = 0; i < length; i += 1) hitBox.push(0);
   })();
 
+  function isInt(n) {
+    return n % 1 === 0;
+  }
+
   const hit = (index) => {
     if (!index) {
       throw new Error(
