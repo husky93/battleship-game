@@ -2,7 +2,7 @@ import Ship from '../src/modules/ship';
 
 //Object initialization tests
 
-test('Ship factory throws error if no attributes specified', () => {
+test('Ship factory throws error if no arguments specified', () => {
   expect(() => Ship()).toThrow();
 });
 
@@ -53,7 +53,7 @@ test('length property is a number', () => {
   expect(typeof object.length).toBe('number');
 });
 
-test('length property is equal to specified length attribute', () => {
+test('length property is equal to specified length argument', () => {
   const ship = Ship(4);
   const shipTwo = Ship(5);
   expect(ship.length).toBe(4);
@@ -67,7 +67,7 @@ test('hitBox property is an array', () => {
 
 test('hitBox initial state is and array full of 0s', () => {
   const object = Ship(3);
-  object.hitBox.forEach((item) => expect(item.toBe(0)));
+  object.hitBox.forEach((item) => expect(item).toBe(0));
 });
 
 test('hitBox array has same length as length property', () => {
@@ -77,12 +77,12 @@ test('hitBox array has same length as length property', () => {
 
 // Hit method tests
 
-test('hit method throws error if no attributes specified', () => {
+test('hit method throws error if no argument specified', () => {
   const object = Ship(4);
   expect(() => object.hit()).toThrow();
 });
 
-test('hit method throws error if first attribute is not a integer', () => {
+test('hit method throws error if first argument is not a integer', () => {
   const object = Ship(4);
   expect(() => object.hit(null)).toThrow();
   expect(() => object.hit(undefined)).toThrow();
@@ -90,7 +90,7 @@ test('hit method throws error if first attribute is not a integer', () => {
   expect(() => object.hit(3.45)).toThrow();
 });
 
-test('hit method throws error if index attribute greater then Ship length', () => {
+test('hit method throws error if index argument greater then Ship length', () => {
   const ship = Ship(4);
   const shipTwo = Ship(2);
   expect(() => ship.hit(4)).toThrow();
