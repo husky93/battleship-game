@@ -29,6 +29,11 @@ const Ship = (length) => {
         'Specified index attribute needs to be an integer number'
       );
     }
+    if (index + 1 > length) {
+      throw new Error(
+        'index attribute cannot be greater then Ship object length attribute'
+      );
+    }
   };
 
   const isSunk = () => {};
