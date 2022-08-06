@@ -1,4 +1,5 @@
 import isInt from '../helpers/isInt';
+import isAllTruthy from '../helpers/isAllTruthy';
 
 const Ship = (length) => {
   if (length === undefined) {
@@ -35,14 +36,6 @@ const Ship = (length) => {
       );
     }
     hitBox[index] = 1;
-  };
-
-  const isAllTruthy = (array) => {
-    let allTruthy = true;
-    array.forEach((element) => {
-      allTruthy = allTruthy && element == true;
-    });
-    return allTruthy;
   };
 
   const isSunk = () => isAllTruthy(hitBox);
