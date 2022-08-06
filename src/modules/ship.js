@@ -1,3 +1,5 @@
+import isInt from '../helpers/isInt';
+
 const Ship = (length) => {
   if (!length) {
     throw new Error(
@@ -16,14 +18,15 @@ const Ship = (length) => {
     for (let i = 0; i < length; i += 1) hitBox.push(0);
   })();
 
-  function isInt(n) {
-    return n % 1 === 0;
-  }
-
   const hit = (index) => {
     if (!index) {
       throw new Error(
         'No arguments specified. Needs to have a "index" argument'
+      );
+    }
+    if (!(typeof index === 'number') || !isInt(index)) {
+      throw new Error(
+        'Specified index attribute needs to be an integer number'
       );
     }
   };
