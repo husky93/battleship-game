@@ -1,7 +1,7 @@
 const isAllTruthy = (array) => {
   let allTruthy = true;
   array.forEach((element) => {
-    allTruthy = allTruthy && element == true;
+    allTruthy = allTruthy && !!element;
   });
   return allTruthy;
 };
