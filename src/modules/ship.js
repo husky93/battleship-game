@@ -37,7 +37,15 @@ const Ship = (length) => {
     hitBox[index] = 1;
   };
 
-  const isSunk = () => {};
+  const isAllTruthy = (array) => {
+    let allTruthy = true;
+    array.forEach((element) => {
+      allTruthy = allTruthy && element == true;
+    });
+    return allTruthy;
+  };
+
+  const isSunk = () => isAllTruthy(hitBox);
 
   return { length, hitBox, hit, isSunk };
 };
