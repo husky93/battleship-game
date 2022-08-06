@@ -16,7 +16,11 @@ const Ship = (length) => {
     for (let i = 0; i < length; i += 1) hitBox.push(0);
   })();
 
-  return { length, hitBox };
+  const hit = (index) => {};
+
+  const isSunk = () => {};
+
+  return { length, hitBox, hit, isSunk };
 };
 
 export default Ship;
