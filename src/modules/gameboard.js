@@ -1,5 +1,6 @@
 const Gameboard = () => {
-  return {};
+  const placeShip = () => {};
+  return { palceShip, isAllShipsSunk };
 };
 
 export default Gameboard;
