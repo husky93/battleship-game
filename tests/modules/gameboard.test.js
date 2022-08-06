@@ -11,8 +11,8 @@ test('Returned object has board property', () => {
 
 test('Returned object has placeShip method', () => {
   const object = Gameboard();
-  expect(object.palceShip).toBeDefined();
-  expect(typeof object.palceShip).toBe('function');
+  expect(object.placeShip).toBeDefined();
+  expect(typeof object.placeShip).toBe('function');
 });
 
 test('Returned object has recieveAttack method', () => {
