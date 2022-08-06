@@ -9,7 +9,14 @@ const Ship = (length) => {
       'Length argument cannot be lesser than 2 or greater then 5'
     );
   }
-  return { length };
+
+  const hitBox = [];
+
+  (function populateHitBox() {
+    for (let i = 0; i < length; i += 1) hitBox.push(0);
+  })();
+
+  return { length, hitBox };
 };
 
 export default Ship;
