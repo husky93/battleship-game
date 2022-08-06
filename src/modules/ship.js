@@ -16,7 +16,13 @@ const Ship = (length) => {
     for (let i = 0; i < length; i += 1) hitBox.push(0);
   })();
 
-  const hit = (index) => {};
+  const hit = (index) => {
+    if (!index) {
+      throw new Error(
+        'No arguments specified. Needs to have a "index" argument'
+      );
+    }
+  };
 
   const isSunk = () => {};
 
