@@ -68,7 +68,7 @@ const mockShip = jest.fn((x) => {
   return { length: x };
 });
 
-//placeShip method
+//  placeShip method
 
 test('Ship factory function is called once inside placeShip method', () => {
   const object = Gameboard();
