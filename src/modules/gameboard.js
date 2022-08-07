@@ -51,6 +51,13 @@ const Gameboard = () => {
         tile.index = i;
       }
     }
+    if (options.horizontally) {
+      for (let i = 0; i < shipLength; i += 1) {
+        const tile = board[y][x + i];
+        tile.ship = ship;
+        tile.index = i;
+      }
+    }
   };
 
   const recieveAttack = () => {};
