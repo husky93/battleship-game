@@ -85,9 +85,10 @@ test('playMoveAI method doesnt target tiles that are already hit', () => {
   gameboards.forEach((gameboard) => {
     gameboard.board.forEach((row, indexY) => {
       row.forEach((tile, indexX) => {
-        if (indexY !== 9 && indexX !== 9) {
-          gameboard.receiveAttack({ x: indexX, y: indexY });
+        if (indexY === 9 && indexX === 9) {
+          return;
         }
+        gameboard.receiveAttack({ x: indexX, y: indexY });
       });
     });
   });
