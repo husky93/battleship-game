@@ -72,7 +72,16 @@ const Gameboard = () => {
 
     return true;
   };
-  const isAllShipsSunk = () => {};
+
+  const isAllShipsSunk = () => {
+    for (const row of board) {
+      const shipTiles = row.filter((tile) => tile.ship !== null);
+      const isAllSunk = shipTiles.every((tile) => tile.ship.isSunk());
+      if (!isAllSunk) return false;
+    }
+    return true;
+  };
+
   return { board, placeShip, isAllShipsSunk, recieveAttack };
 };
 

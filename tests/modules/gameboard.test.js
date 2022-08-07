@@ -1,4 +1,5 @@
 import Gameboard from '../../src/modules/gameboard';
+import Ship from '../../src/modules/ship';
 
 test('Gameboard factory function returns an object', () => {
   expect(typeof Gameboard()).toBe('object');
@@ -207,8 +208,8 @@ test('recieveAttack works correctly', () => {
 
 test('isAllShipsSunk returns true if all ships on the board are sunk', () => {
   const object = Gameboard();
-  object.placeShip(mockShip(2), { x: 0, y: 5, horizontally: true });
-  object.placeShip(mockShip(3), { x: 4, y: 6, horizontally: true });
+  object.placeShip(Ship(2), { x: 0, y: 5, horizontally: true });
+  object.placeShip(Ship(3), { x: 4, y: 6, horizontally: true });
   object.recieveAttack({ x: 0, y: 5 });
   object.recieveAttack({ x: 1, y: 5 });
   object.recieveAttack({ x: 4, y: 6 });
@@ -220,9 +221,9 @@ test('isAllShipsSunk returns true if all ships on the board are sunk', () => {
 
 test('isAllShipsSunk returns false if not all ships on the board are sunk', () => {
   const object = Gameboard();
-  object.placeShip(mockShip(2), { x: 0, y: 5, horizontally: true });
-  object.placeShip(mockShip(3), { x: 4, y: 6, horizontally: true });
-  object.placeShip(mockShip(4), { x: 9, y: 7, vertically: true });
+  object.placeShip(Ship(2), { x: 0, y: 5, horizontally: true });
+  object.placeShip(Ship(3), { x: 4, y: 6, horizontally: true });
+  object.placeShip(Ship(4), { x: 9, y: 7, vertically: true });
   object.recieveAttack({ x: 0, y: 5 });
   object.recieveAttack({ x: 1, y: 5 });
   object.recieveAttack({ x: 4, y: 6 });
