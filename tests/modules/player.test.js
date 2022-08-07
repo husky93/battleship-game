@@ -29,7 +29,17 @@ test('Returned object has playMoveAI method', () => {
 
 test('isMyTurn property is false initially', () => {
   const player = Player();
-  expect(object.isMyTurn).toBe(false);
+  expect(player.isMyTurn).toBe(false);
+});
+
+test('isAI property returns true if it was specified in player initialization options', () => {
+  const object = Player({ isAI: true });
+  expect(object.isAI).toBe(true);
+});
+
+test('isAI property returns false if it wasnt specified in player initialization options', () => {
+  const object = Player();
+  expect(object.isAI).toBe(false);
 });
 
 // playMoveAI method
@@ -39,11 +49,11 @@ test('playMoveAI throws error when no argument specified', () => {
   expect(() => object.playMoveAI()).toThrow();
 });
 
-test('playMoveAI throws error when argument is not an array', () => {
+test('playMoveAI throws error when argument is not an object', () => {
   const object = Player();
   expect(() => object.playMoveAI(null)).toThrow();
   expect(() => object.playMoveAI(3)).toThrow();
-  expect(() => object.playMoveAI({ x: 3, y: 5 })).toThrow();
+  expect(() => object.playMoveAI([])).toThrow();
 });
 
 test('playMoveAI method plays a random move', () => {
