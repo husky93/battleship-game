@@ -121,8 +121,11 @@ test('placeShip method throws error when both directions specified', () => {
 test('placeShip method throws error when ship is placed out of bounds', () => {
   const object = Gameboard();
   expect(() =>
-    object.placeShip(mockShip(4), { x: 8, y: 8, horizontally: true })
+    object.placeShip(mockShip(3), { x: 8, y: 8, horizontally: true })
   ).toThrow();
+  expect(() =>
+    object.placeShip(mockShip(2), { x: 8, y: 8, horizontally: true })
+  ).not.toThrow();
   expect(() =>
     object.placeShip(mockShip(3), { x: 9, y: 1, vertically: true })
   ).toThrow();
@@ -162,7 +165,7 @@ test('placeShip places the ship horizontally inside board array correctly', () =
   });
 });
 
-//recieveAttack method
+//  recieveAttack method
 
 test('recieveAttack method throws error when no arguments specified', () => {
   const object = Gameboard();
@@ -188,7 +191,7 @@ test('recieveAttack works correctly', () => {
   expect(tileTwo.isHit).toBe(true);
 });
 
-//isAllShipsSunk method
+//  isAllShipsSunk method
 
 test('isAllShipsSunk returns true if all ships on the board are sunk', () => {
   const object = Gameboard();
