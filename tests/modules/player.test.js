@@ -59,12 +59,16 @@ test('playMoveAI throws error when argument is not an object', () => {
 test('playMoveAI method plays a random move', () => {
   const gameboard = Gameboard();
   const player = Player({ isAI: true });
-  const i = 0;
+  let i = 0;
 
+  player.changeTurn();
+  expect(player.isMyTurn).toBe(true);
   player.playMoveAI(gameboard);
   gameboard.board.forEach((row) => {
     row.forEach((tile) => {
-      if (tile.isHit) i++;
+      if (tile.isHit) {
+        i += 1;
+      }
     });
   });
 
@@ -72,33 +76,26 @@ test('playMoveAI method plays a random move', () => {
 });
 
 test('playMoveAI method doesnt target tiles that are already hit', () => {
-  const mockGameboard = jest.fn(() => {
-    const board = [];
-    (function initializeBoard() {
-      for (let i = 0; i < 10; i += 1) {
-        const array = [];
-        for (let j = 0; j < 10; j += 1) {
-          const obj = { ship: null, index: null, isHit: true };
-          if (i === 9 && j === 9) {
-            obj.isHit = false;
-          }
-          array.push(obj);
-        }
-        board.push(array);
-      }
-    })();
-    return { board };
-  });
-
-  const gameboardOne = mockGameboard();
-  const gameboardTwo = mockGameboard();
-  const gameboardThree = mockGameboard();
+  const gameboardOne = Gameboard();
+  const gameboardTwo = Gameboard();
+  const gameboardThree = Gameboard();
+  const gameboards = [gameboardOne, gameboardTwo, gameboardThree];
   const player = Player({ isAI: true });
 
+  gameboards.forEach((gameboard) => {
+    gameboard.board.forEach((row, indexY) => {
+      row.forEach((tile, indexX) => {
+        if (indexY !== 9 && indexX !== 9) {
+          gameboard.receiveAttack({ x: indexX, y: indexY });
+        }
+      });
+    });
+  });
+
+  player.changeTurn();
   player.playMoveAI(gameboardOne);
   player.playMoveAI(gameboardTwo);
   player.playMoveAI(gameboardThree);
-
   expect(gameboardOne.board[9][9].isHit).toBe(true);
   expect(gameboardTwo.board[9][9].isHit).toBe(true);
   expect(gameboardThree.board[9][9].isHit).toBe(true);

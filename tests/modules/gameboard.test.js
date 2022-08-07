@@ -16,10 +16,10 @@ test('Returned object has placeShip method', () => {
   expect(typeof object.placeShip).toBe('function');
 });
 
-test('Returned object has recieveAttack method', () => {
+test('Returned object has receiveAttack method', () => {
   const object = Gameboard();
-  expect(object.recieveAttack).toBeDefined();
-  expect(typeof object.recieveAttack).toBe('function');
+  expect(object.receiveAttack).toBeDefined();
+  expect(typeof object.receiveAttack).toBe('function');
 });
 
 test('Returned object has isAllShipsSunk method', () => {
@@ -45,13 +45,25 @@ test('Board property contains 10 arrays and each of those arrays contains 10 obj
   });
 });
 
-test('Every tile object has a ship, index and isHit property', () => {
+test('Every tile object has a ship, index, isHit, x, y properties', () => {
   const object = Gameboard();
   object.board.forEach((item) => {
     item.forEach((tile) => {
       expect(tile.ship).toBeDefined();
       expect(tile.index).toBeDefined();
       expect(tile.isHit).toBeDefined();
+      expect(tile.x).toBeDefined();
+      expect(tile.y).toBeDefined();
+    });
+  });
+});
+
+test('Every tile x, y properties are correct', () => {
+  const object = Gameboard();
+  object.board.forEach((item, indexY) => {
+    item.forEach((tile, indexX) => {
+      expect(tile.x).toBe(indexX);
+      expect(tile.y).toBe(indexY);
     });
   });
 });
@@ -166,39 +178,39 @@ test('placeShip places the ship horizontally inside board array correctly', () =
   });
 });
 
-//  recieveAttack method
+//  receiveAttack method
 
-test('recieveAttack method throws error when no arguments specified', () => {
+test('receiveAttack method throws error when no arguments specified', () => {
   const object = Gameboard();
-  expect(() => object.recieveAttack()).toThrow();
+  expect(() => object.receiveAttack()).toThrow();
 });
 
-test('recieveAttack method throws error when no or too few coordinates specified', () => {
+test('receiveAttack method throws error when no or too few coordinates specified', () => {
   const object = Gameboard();
-  expect(() => object.recieveAttack({})).toThrow();
-  expect(() => object.recieveAttack({ x: 1 })).toThrow();
-  expect(() => object.recieveAttack({ y: 1 })).toThrow();
+  expect(() => object.receiveAttack({})).toThrow();
+  expect(() => object.receiveAttack({ x: 1 })).toThrow();
+  expect(() => object.receiveAttack({ y: 1 })).toThrow();
 });
 
-test('recieveAttack method returns false if tile already hit', () => {
+test('receiveAttack method returns false if tile already hit', () => {
   const object = Gameboard();
-  object.recieveAttack({ x: 3, y: 3 });
-  expect(object.recieveAttack({ x: 3, y: 3 })).toBe(false);
+  object.receiveAttack({ x: 3, y: 3 });
+  expect(object.receiveAttack({ x: 3, y: 3 })).toBe(false);
 });
 
-test('recieveAttack method returns true if tile was not hit before', () => {
+test('receiveAttack method returns true if tile was not hit before', () => {
   const object = Gameboard();
-  object.recieveAttack({ x: 3, y: 3 });
-  expect(object.recieveAttack({ x: 2, y: 3 })).toBe(true);
+  object.receiveAttack({ x: 3, y: 3 });
+  expect(object.receiveAttack({ x: 2, y: 3 })).toBe(true);
 });
 
-test('recieveAttack works correctly', () => {
+test('receiveAttack works correctly', () => {
   const object = Gameboard();
   object.placeShip(mockShip(4), { x: 0, y: 5, horizontally: true });
   const tileOne = object.board[5][0];
   const tileTwo = object.board[5][2];
-  object.recieveAttack({ x: 0, y: 5 });
-  object.recieveAttack({ x: 2, y: 5 });
+  object.receiveAttack({ x: 0, y: 5 });
+  object.receiveAttack({ x: 2, y: 5 });
 
   expect(tileOne.isHit).toBe(true);
   expect(tileTwo.isHit).toBe(true);
@@ -210,11 +222,11 @@ test('isAllShipsSunk returns true if all ships on the board are sunk', () => {
   const object = Gameboard();
   object.placeShip(Ship(2), { x: 0, y: 5, horizontally: true });
   object.placeShip(Ship(3), { x: 4, y: 6, horizontally: true });
-  object.recieveAttack({ x: 0, y: 5 });
-  object.recieveAttack({ x: 1, y: 5 });
-  object.recieveAttack({ x: 4, y: 6 });
-  object.recieveAttack({ x: 5, y: 6 });
-  object.recieveAttack({ x: 6, y: 6 });
+  object.receiveAttack({ x: 0, y: 5 });
+  object.receiveAttack({ x: 1, y: 5 });
+  object.receiveAttack({ x: 4, y: 6 });
+  object.receiveAttack({ x: 5, y: 6 });
+  object.receiveAttack({ x: 6, y: 6 });
 
   expect(object.isAllShipsSunk()).toBe(true);
 });
@@ -224,12 +236,12 @@ test('isAllShipsSunk returns false if not all ships on the board are sunk', () =
   object.placeShip(Ship(2), { x: 0, y: 5, horizontally: true });
   object.placeShip(Ship(3), { x: 4, y: 6, horizontally: true });
   object.placeShip(Ship(4), { x: 9, y: 7, vertically: true });
-  object.recieveAttack({ x: 0, y: 5 });
-  object.recieveAttack({ x: 1, y: 5 });
-  object.recieveAttack({ x: 4, y: 6 });
-  object.recieveAttack({ x: 5, y: 6 });
-  object.recieveAttack({ x: 6, y: 6 });
-  object.recieveAttack({ x: 9, y: 7 });
+  object.receiveAttack({ x: 0, y: 5 });
+  object.receiveAttack({ x: 1, y: 5 });
+  object.receiveAttack({ x: 4, y: 6 });
+  object.receiveAttack({ x: 5, y: 6 });
+  object.receiveAttack({ x: 6, y: 6 });
+  object.receiveAttack({ x: 9, y: 7 });
 
   expect(object.isAllShipsSunk()).toBe(false);
 });

@@ -4,7 +4,7 @@ const Gameboard = () => {
     for (let i = 0; i < 10; i += 1) {
       const array = [];
       for (let j = 0; j < 10; j += 1) {
-        const obj = { ship: null, index: null, isHit: false };
+        const obj = { ship: null, index: null, isHit: false, x: j, y: i };
         array.push(obj);
       }
       board.push(array);
@@ -60,7 +60,7 @@ const Gameboard = () => {
     }
   };
 
-  const recieveAttack = (coordinates = {}) => {
+  const receiveAttack = (coordinates = {}) => {
     if (coordinates.x === undefined || coordinates.y === undefined)
       throw new Error('Specify both x axis and y axis coordinates');
     const { x } = coordinates;
@@ -82,7 +82,7 @@ const Gameboard = () => {
     return true;
   };
 
-  return { board, placeShip, isAllShipsSunk, recieveAttack };
+  return { board, placeShip, isAllShipsSunk, receiveAttack };
 };
 
 export default Gameboard;

@@ -1,6 +1,6 @@
 import Ship from '../../src/modules/ship';
 
-//Object initialization tests
+//  Object initialization tests
 
 test('Ship factory throws error if no arguments specified', () => {
   expect(() => Ship()).toThrow();
