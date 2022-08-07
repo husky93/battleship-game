@@ -22,7 +22,13 @@ const Gameboard = () => {
       throw new Error("You're trying to place ship out of gameboard bounds");
     }
     if (options.x === undefined || options.y === undefined) {
-      throw new Error('Please specify both x axis and y axis coordinates');
+      throw new Error('Specify both x axis and y axis coordinates');
+    }
+    if (
+      options.horizontally === undefined &&
+      options.vertically === undefined
+    ) {
+      throw new Error('Specify ship placement direction');
     }
   }
   const recieveAttack = () => {};
