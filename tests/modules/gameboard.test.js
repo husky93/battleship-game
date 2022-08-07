@@ -65,7 +65,7 @@ test('Every isHit property is false on initialization', () => {
 });
 
 const mockShip = jest.fn((x) => {
-  return { length: x };
+  return { length: x, hit: () => {} };
 });
 
 //  placeShip method
@@ -177,6 +177,18 @@ test('recieveAttack method throws error when no or too few coordinates specified
   expect(() => object.recieveAttack({})).toThrow();
   expect(() => object.recieveAttack({ x: 1 })).toThrow();
   expect(() => object.recieveAttack({ y: 1 })).toThrow();
+});
+
+test('recieveAttack method returns false if tile already hit', () => {
+  const object = Gameboard();
+  object.recieveAttack({ x: 3, y: 3 });
+  expect(object.recieveAttack({ x: 3, y: 3 })).toBe(false);
+});
+
+test('recieveAttack method returns true if tile was not hit before', () => {
+  const object = Gameboard();
+  object.recieveAttack({ x: 3, y: 3 });
+  expect(object.recieveAttack({ x: 2, y: 3 })).toBe(true);
 });
 
 test('recieveAttack works correctly', () => {

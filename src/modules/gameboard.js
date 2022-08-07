@@ -60,7 +60,18 @@ const Gameboard = () => {
     }
   };
 
-  const recieveAttack = () => {};
+  const recieveAttack = (coordinates = {}) => {
+    if (coordinates.x === undefined || coordinates.y === undefined)
+      throw new Error('Specify both x axis and y axis coordinates');
+    const { x } = coordinates;
+    const { y } = coordinates;
+    const tile = board[y][x];
+    if (tile.isHit) return false;
+    tile.isHit = true;
+    if (tile.ship) tile.ship.hit(tile.index);
+
+    return true;
+  };
   const isAllShipsSunk = () => {};
   return { board, placeShip, isAllShipsSunk, recieveAttack };
 };
