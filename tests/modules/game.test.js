@@ -4,8 +4,8 @@ test('Game module returns an object', () => {
   expect(typeof game).toBe('object');
 });
 
-test('Game module has 4 properties', () => {
-  expect(Object.keys(game).length).toBe(4);
+test('Game module has 5 properties', () => {
+  expect(Object.keys(game).length).toBe(5);
 });
 
 test('Game module has a playerOne object', () => {
