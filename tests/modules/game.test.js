@@ -83,11 +83,11 @@ test('startGame puts 5 ships on each gameboard', () => {
   game.startGame();
   let i = 0;
   let j = 0;
-  playerOne.gameboard.board.forEach((row) => {
+  game.playerOne.gameboard.board.forEach((row) => {
     const shipTiles = row.filter((tile) => tile.ship);
     i += shipTiles.length;
   });
-  playerTwo.gameboard.board.forEach((row) => {
+  game.playerTwo.gameboard.board.forEach((row) => {
     const shipTiles = row.filter((tile) => tile.ship);
     j += shipTiles.length;
   });
@@ -135,7 +135,7 @@ test('playTurn hits the correct board when its AI turn', () => {
 test('playTurn checks if all ships are hit after the attack and changes gameOver and players state to initial', () => {
   game.startGame();
   const shipTiles = [];
-  playerTwo.gameboard.board.forEach((row) => {
+  game.playerTwo.gameboard.board.forEach((row) => {
     shipTiles = [...shipTiles, ...row.filter((tile) => tile.ship)];
   });
 
@@ -144,15 +144,15 @@ test('playTurn checks if all ships are hit after the attack and changes gameOver
   for (let i = 0; i < length - 1; i += 1) {
     const x = shipTiles[i].x;
     const y = shipTiles[i].y;
-    playerTwo.gameboard.receiveAttack({ x, y });
+    game.playerTwo.gameboard.receiveAttack({ x, y });
   }
   const notHitShip = shipTiles.filter((tile) => !tile.isHit);
   expect(notHitShip.length).toBe(1);
 
-  expect(playerTwo.gameboard.isAllShipsSunk()).toBe(false);
+  expect(game.playerTwo.gameboard.isAllShipsSunk()).toBe(false);
   expect(game.gameOver).toBe(false);
   game.playTurn({ x: notHitShip[0].x, y: notHitShip[0].y });
-  expect(playerTwo.gameboard.isAllShipsSunk()).toBe(true);
+  expect(game.playerTwo.gameboard.isAllShipsSunk()).toBe(true);
   expect(game.gameOver).toBe(true);
   expect(game.playerOne.player).toBe(null);
   expect(game.playerOne.gameboard).toBe(null);
