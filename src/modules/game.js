@@ -15,6 +15,8 @@ const game = (() => {
     gameOver = true;
   };
 
+  const placeShips = () => {};
+
   const startGame = () => {
     clearGameState();
     gameOver = false;
@@ -30,8 +32,12 @@ const game = (() => {
   return {
     startGame,
     playTurn,
-    playerOne,
-    playerTwo,
+    get playerOne() {
+      return playerOne;
+    },
+    get playerTwo() {
+      return playerTwo;
+    },
     get gameOver() {
       return gameOver;
     },

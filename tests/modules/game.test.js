@@ -1,5 +1,4 @@
 import game from '../../src/modules/game';
-
 test('Game module returns an object', () => {
   expect(typeof game).toBe('object');
 });
@@ -71,13 +70,11 @@ test('startGame method initializes playerTwo as an AI', () => {
 });
 
 test('startGame changes turn of player one to true', () => {
-  expect(game.playerOne.player.isMyTurn).toBe(false);
   game.startGame();
   expect(game.playerOne.player.isMyTurn).toBe(true);
 });
 
 test('playerTwo turn is false after calling startGame method', () => {
-  expect(game.playerTwo.player.isMyTurn).toBe(false);
   game.startGame();
   expect(game.playerTwo.player.isMyTurn).toBe(false);
 });
