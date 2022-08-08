@@ -50,6 +50,10 @@ test('gameOver property is true on default', () => {
 
 test('startGame method creates player and gameboard object for each player', () => {
   game.startGame();
+  expect(game.playerOne.player).not.toBe(null);
+  expect(game.playerOne.gameboard).not.toBe(null);
+  expect(game.playerTwo.player).not.toBe(null);
+  expect(game.playerTwo.gameboard).not.toBe(null);
   expect(typeof game.playerOne.player).toBe('object');
   expect(typeof game.playerOne.gameboard).toBe('object');
   expect(typeof game.playerTwo.player).toBe('object');
@@ -72,6 +76,12 @@ test('startGame changes turn of player one to true', () => {
   expect(game.playerOne.player.isMyTurn).toBe(true);
 });
 
+test('playerTwo turn is false after calling startGame method', () => {
+  expect(game.playerTwo.player.isMyTurn).toBe(false);
+  game.startGame();
+  expect(game.playerTwo.player.isMyTurn).toBe(false);
+});
+
 test('startGame puts 5 ships on each gameboard', () => {
   game.startGame();
   let i = 0;
@@ -87,12 +97,6 @@ test('startGame puts 5 ships on each gameboard', () => {
 
   expect(i).toBe(17);
   expect(j).toBe(17);
-});
-
-test('playerTwo turn is false after calling startGame method', () => {
-  expect(game.playerTwo.player.isMyTurn).toBe(false);
-  game.startGame();
-  expect(game.playerTwo.player.isMyTurn).toBe(false);
 });
 
 test('playTurn method throws error if no coordinates specified and player is not AI', () => {
@@ -131,7 +135,7 @@ test('playTurn hits the correct board when its AI turn', () => {
   expect(i).toBe(1);
 });
 
-test('playTurn checks if all ships are hit after the attack and changes gameOver state', () => {
+test('playTurn checks if all ships are hit after the attack and changes gameOver and players state to initial', () => {
   game.startGame();
   const shipTiles = [];
   playerTwo.gameboard.board.forEach((row) => {
@@ -153,4 +157,8 @@ test('playTurn checks if all ships are hit after the attack and changes gameOver
   game.playTurn({ x: notHitShip[0].x, y: notHitShip[0].y });
   expect(playerTwo.gameboard.isAllShipsSunk()).toBe(true);
   expect(game.gameOver).toBe(true);
+  expect(game.playerOne.player).toBe(null);
+  expect(game.playerOne.gameboard).toBe(null);
+  expect(game.playerTwo.player).toBe(null);
+  expect(game.playerTwo.gameboard).toBe(null);
 });

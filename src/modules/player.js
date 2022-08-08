@@ -3,7 +3,7 @@ const Player = (options = {}) => {
   const isAI = options.isAI || false;
 
   function changeTurn() {
-    this.isMyTurn = !this.isMyTurn;
+    isMyTurn = !isMyTurn;
   }
 
   function playMoveAI(gameboard) {
@@ -15,7 +15,7 @@ const Player = (options = {}) => {
     ) {
       throw new Error('Need to specify gameboard object as an argument');
     }
-    if (this.isMyTurn) {
+    if (isMyTurn) {
       let notHitTiles = [];
       gameboard.board.forEach((row) => {
         const filtered = row.filter((tile) => !tile.isHit);
@@ -27,7 +27,16 @@ const Player = (options = {}) => {
     }
   }
 
-  return { isMyTurn, isAI, changeTurn, playMoveAI };
+  return {
+    get isMyTurn() {
+      return isMyTurn;
+    },
+    get isAI() {
+      return isAI;
+    },
+    changeTurn,
+    playMoveAI,
+  };
 };
 
 export default Player;

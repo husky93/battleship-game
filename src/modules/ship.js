@@ -40,7 +40,16 @@ const Ship = (length) => {
 
   const isSunk = () => isAllTruthy(hitBox);
 
-  return { length, hitBox, hit, isSunk };
+  return {
+    get length() {
+      return length;
+    },
+    get hitBox() {
+      return hitBox;
+    },
+    hit,
+    isSunk,
+  };
 };
 
 export default Ship;
