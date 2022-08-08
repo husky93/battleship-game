@@ -39,7 +39,22 @@ const game = (() => {
     placeShips();
   };
 
-  const playTurn = () => {};
+  const playTurn = (coordinates = {}) => {
+    if (playerOne.player.isMyTurn && (!coordinates.x || !coordinates.y))
+      throw new Error('Specify coordinates for non-ai player');
+    if (playerOne.player.isMyTurn) {
+      const { gameboard } = playerTwo;
+      const { x } = coordinates;
+      const { y } = coordinates;
+      gameboard.receiveAttack({ x, y });
+    }
+    if (playerTwo.player.isMyTurn) {
+      const { gameboard } = playerOne;
+      playerTwo.player.playMoveAI(gameboard);
+    }
+    playerOne.player.changeTurn();
+    playerTwo.player.changeTurn();
+  };
 
   return {
     startGame,

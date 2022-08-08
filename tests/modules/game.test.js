@@ -101,6 +101,13 @@ test('playTurn method throws error if no coordinates specified and player is not
   expect(() => game.playTurn()).toThrow();
 });
 
+test('playTurn method doesnt throw error if no coordinates specified and player is AI', () => {
+  game.startGame();
+  game.playerOne.player.changeTurn();
+  game.playerTwo.player.changeTurn();
+  expect(() => game.playTurn()).not.toThrow();
+});
+
 test('playTurn method changes player turn after being called', () => {
   game.startGame();
   expect(game.playerOne.player.isMyTurn).toBe(true);
@@ -125,7 +132,7 @@ test('playTurn hits the correct board when its AI turn', () => {
   expect(game.playerTwo.player.isAI).toBe(true);
   game.playTurn();
   let i = 0;
-  playerOne.gameboard.board.forEach((row) => {
+  game.playerOne.gameboard.board.forEach((row) => {
     const hitTiles = row.filter((tile) => tile.isHit);
     i += hitTiles.length;
   });
