@@ -139,9 +139,9 @@ test('playTurn hits the correct board when its AI turn', () => {
   expect(i).toBe(1);
 });
 
-test('playTurn checks if all ships are hit after the attack and changes gameOver and players state to initial', () => {
+test('playTurn checks if all ships are hit after the attack and changes gameOver to true', () => {
   game.startGame();
-  const shipTiles = [];
+  let shipTiles = [];
   game.playerTwo.gameboard.board.forEach((row) => {
     shipTiles = [...shipTiles, ...row.filter((tile) => tile.ship)];
   });
@@ -161,8 +161,4 @@ test('playTurn checks if all ships are hit after the attack and changes gameOver
   game.playTurn({ x: notHitShip[0].x, y: notHitShip[0].y });
   expect(game.playerTwo.gameboard.isAllShipsSunk()).toBe(true);
   expect(game.gameOver).toBe(true);
-  expect(game.playerOne.player).toBe(null);
-  expect(game.playerOne.gameboard).toBe(null);
-  expect(game.playerTwo.player).toBe(null);
-  expect(game.playerTwo.gameboard).toBe(null);
 });
