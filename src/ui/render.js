@@ -1,4 +1,6 @@
 import createBoard from './components/board';
+import dragdrop from './components/dragdrop';
+import Gameboard from '../modules/gameboard';
 
 const render = (() => {
   const main = document.querySelector('.main');
@@ -13,9 +15,10 @@ const render = (() => {
 
   const renderPlace = () => {
     clearMain();
-    const boardOne = createBoard('place');
-
-    main.appendChild(boardOne, boardTwo);
+    const dragDrop = dragdrop.createDragDrop();
+    const placeGameboard = Gameboard();
+    const boardOne = createBoard('place', placeGameboard.board);
+    main.append(dragDrop, boardOne);
   };
 
   const renderGame = (game) => {

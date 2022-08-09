@@ -5,6 +5,13 @@ const elementsDOM = (() => {
     return wrapper;
   };
 
+  const createImg = ([...classList], src) => {
+    const image = new Image();
+    image.src = src;
+    classList.forEach((item) => image.classList.add(item));
+    return image;
+  };
+
   const createBoardTile = (x, y) => {
     const tile = document.createElement('div');
     tile.classList.add('tile');
@@ -12,7 +19,7 @@ const elementsDOM = (() => {
     tile.dataset.y = y;
     return tile;
   };
-  return { createWrapper, createBoardTile };
+  return { createWrapper, createImg, createBoardTile };
 })();
 
 export default elementsDOM;

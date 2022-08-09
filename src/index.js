@@ -4,3 +4,4 @@ import render from './ui/render';
 
 // game.startGame();
 // render.renderGame(game);
+render.renderPlace();
