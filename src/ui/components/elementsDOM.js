@@ -19,7 +19,20 @@ const elementsDOM = (() => {
     tile.dataset.y = y;
     return tile;
   };
-  return { createWrapper, createImg, createBoardTile };
+
+  const createDraggableShip = (width, vertical) => {
+    const ship = createWrapper(['ship', 'draggable'], 'div');
+    if (vertical) ship.classList.add('vertical');
+    ship.dataset.width = width;
+    ship.draggable = true;
+    for (let i = 0; i < width; i += 1) {
+      const shipTile = createWrapper(['ship-tile'], 'div');
+      ship.appendChild(shipTile);
+    }
+
+    return ship;
+  };
+  return { createWrapper, createImg, createBoardTile, createDraggableShip };
 })();
 
 export default elementsDOM;

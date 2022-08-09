@@ -7,6 +7,8 @@
 }
 
 .gameboard {
+  z-index: 1;
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -21,31 +23,26 @@
   border: 1px #afafaf solid;
 }
 
-.span-5 {
-  width: 200px;
-  height: 40px;
-}
-
-.span-4 {
-  width: 160px;
-  height: 40px;
-}
-
-.span-3 {
-  width: 120px;
-  height: 40px;
-}
-
-.span-2 {
-  width: 80px;
-  height: 40px;
-}
-
 .ship-tile {
+  width: 40px;
+  height: 40px;
+  background-color: black;
+  border: 1px #afafaf solid;
+}
+
+.ship {
+  display: flex;
+  transition: opacity 0.1s ease-out;
+  width: min-content;
+  z-index: 15;
+}
+
+.ship.vertical {
+  flex-direction: column;
   transition: opacity 0.1s ease-out;
 }
 
-.ship-tile.draggable {
+.ship.draggable {
   cursor: move;
 }
 
