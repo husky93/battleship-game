@@ -108,13 +108,22 @@ test('playTurn method doesnt throw error if no coordinates specified and player 
   expect(() => game.playTurn()).not.toThrow();
 });
 
-test('playTurn method changes player turn after being called', () => {
+test('playTurn method changes player turn after hitting empty square', () => {
   game.startGame();
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
-  game.playTurn({ x: 2, y: 3 });
+  game.playTurn({ x: 3, y: 3 });
   expect(game.playerOne.player.isMyTurn).toBe(false);
   expect(game.playerTwo.player.isMyTurn).toBe(true);
+});
+
+test('playTurn method doesnt change player turn after hitting ship', () => {
+  game.startGame();
+  expect(game.playerOne.player.isMyTurn).toBe(true);
+  expect(game.playerTwo.player.isMyTurn).toBe(false);
+  game.playTurn({ x: 2, y: 6 });
+  expect(game.playerOne.player.isMyTurn).toBe(true);
+  expect(game.playerTwo.player.isMyTurn).toBe(false);
 });
 
 test('playTurn hits the specified coordinates on a correct board', () => {

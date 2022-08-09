@@ -75,6 +75,26 @@ test('playMoveAI method plays a random move', () => {
   expect(i).toBe(1);
 });
 
+test('playMoveAI returns coordinates of a hit', () => {
+  const gameboard = Gameboard();
+  const player = Player({ isAI: true });
+  let i = 0;
+  let hitTile = null;
+
+  player.changeTurn();
+  expect(player.isMyTurn).toBe(true);
+  const coordinates = player.playMoveAI(gameboard);
+  gameboard.board.forEach((row) => {
+    row.forEach((tile) => {
+      if (tile.isHit) {
+        hitTile = tile;
+      }
+    });
+  });
+  expect(coordinates.x).toBe(hitTile.x);
+  expect(coordinates.y).toBe(hitTile.y);
+});
+
 test('playMoveAI method doesnt target tiles that are already hit', () => {
   const gameboardOne = Gameboard();
   const gameboardTwo = Gameboard();

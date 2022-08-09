@@ -24,6 +24,7 @@ const Player = (options = {}) => {
       const randomTile =
         notHitTiles[Math.floor(Math.random() * notHitTiles.length)];
       gameboard.receiveAttack({ x: randomTile.x, y: randomTile.y });
+      return { x: randomTile.x, y: randomTile.y };
     }
   }
 

@@ -48,21 +48,28 @@ const game = (() => {
   const playTurn = (coordinates = {}) => {
     if (playerOne.player.isMyTurn && (!coordinates.x || !coordinates.y))
       throw new Error('Specify coordinates for non-ai player');
+    let hitTile = null;
     if (playerOne.player.isMyTurn) {
       const { gameboard } = playerTwo;
       const { x } = coordinates;
       const { y } = coordinates;
       gameboard.receiveAttack({ x, y });
+      hitTile = gameboard.board[y][x];
     }
     if (playerTwo.player.isMyTurn) {
       const { gameboard } = playerOne;
-      playerTwo.player.playMoveAI(gameboard);
+      const hitCoordinates = playerTwo.player.playMoveAI(gameboard);
+      const { x } = hitCoordinates;
+      const { y } = hitCoordinates;
+      hitTile = gameboard.board[y][x];
     }
     if (isGameOver()) {
       gameOver = true;
     }
-    playerOne.player.changeTurn();
-    playerTwo.player.changeTurn();
+    if (!hitTile.ship) {
+      playerOne.player.changeTurn();
+      playerTwo.player.changeTurn();
+    }
   };
 
   return {

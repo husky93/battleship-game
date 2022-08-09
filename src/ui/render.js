@@ -15,10 +15,10 @@ const render = (() => {
 
   const renderPlace = () => {
     clearMain();
-    const dragDrop = dragdrop.createDragDrop();
     const placeGameboard = Gameboard();
-    const boardOne = createBoard('place', placeGameboard.board);
-    main.append(dragDrop, boardOne);
+    const boardPlace = createBoard('place', placeGameboard.board);
+    const dragDrop = dragdrop.createDragDrop(boardPlace);
+    main.append(dragDrop, boardPlace);
   };
 
   const renderGame = (game) => {

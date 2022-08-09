@@ -8,6 +8,11 @@
 
 .gameboard {
   display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
 }
 
 .tile {
@@ -36,6 +41,14 @@
   height: 40px;
 }
 
-.ship-icon {
+.ship-tile {
+  transition: opacity 0.1s ease-out;
+}
+
+.ship-tile.draggable {
   cursor: move;
+}
+
+.tile.over {
+  border: 3px dotted #666;
 }
