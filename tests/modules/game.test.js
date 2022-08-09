@@ -121,7 +121,7 @@ test('playTurn method doesnt change player turn after hitting ship', () => {
   game.startGame();
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
-  game.playTurn({ x: 2, y: 6 });
+  game.playTurn({ x: 5, y: 5 });
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
 });

@@ -33,7 +33,7 @@ const Gameboard = () => {
 
     if (
       (options.horizontally && options.x + ship.length - 1 > MAX_INDEX) ||
-      (options.vertically && options.y - ship.length + 1 < 0)
+      (options.vertically && options.y + ship.length - 1 > MAX_INDEX)
     )
       throw new Error("You're trying to place ship out of gameboard bounds");
   }
@@ -46,7 +46,7 @@ const Gameboard = () => {
     const { y } = options;
     if (options.vertically) {
       for (let i = 0; i < shipLength; i += 1) {
-        const tile = board[y - i][x];
+        const tile = board[y + i][x];
         tile.ship = ship;
         tile.index = i;
       }

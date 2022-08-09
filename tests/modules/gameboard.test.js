@@ -140,10 +140,10 @@ test('placeShip method throws error when ship is placed out of bounds', () => {
     object.placeShip(mockShip(2), { x: 8, y: 8, horizontally: true })
   ).not.toThrow();
   expect(() =>
-    object.placeShip(mockShip(3), { x: 9, y: 1, vertically: true })
+    object.placeShip(mockShip(3), { x: 9, y: 8, vertically: true })
   ).toThrow();
   expect(() =>
-    object.placeShip(mockShip(3), { x: 9, y: 2, vertically: true })
+    object.placeShip(mockShip(3), { x: 9, y: 7, vertically: true })
   ).not.toThrow();
 });
 
@@ -151,8 +151,8 @@ test('placeShip places the ship vertically inside board array correctly', () => 
   const object = Gameboard();
   object.placeShip(mockShip(3), { x: 0, y: 5, vertically: true });
   const tileOne = object.board[5][0];
-  const tileTwo = object.board[4][0];
-  const tileThree = object.board[3][0];
+  const tileTwo = object.board[6][0];
+  const tileThree = object.board[7][0];
   const tiles = [tileOne, tileTwo, tileThree];
 
   tiles.forEach((tile, index) => {
@@ -235,7 +235,7 @@ test('isAllShipsSunk returns false if not all ships on the board are sunk', () =
   const object = Gameboard();
   object.placeShip(Ship(2), { x: 0, y: 5, horizontally: true });
   object.placeShip(Ship(3), { x: 4, y: 6, horizontally: true });
-  object.placeShip(Ship(4), { x: 9, y: 7, vertically: true });
+  object.placeShip(Ship(4), { x: 9, y: 6, vertically: true });
   object.receiveAttack({ x: 0, y: 5 });
   object.receiveAttack({ x: 1, y: 5 });
   object.receiveAttack({ x: 4, y: 6 });

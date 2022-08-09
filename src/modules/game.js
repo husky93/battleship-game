@@ -19,12 +19,12 @@ const game = (() => {
     playerOne.gameboard.placeShip(Ship(5), { x: 1, y: 0, horizontally: true });
     playerOne.gameboard.placeShip(Ship(4), { x: 0, y: 1, horizontally: true });
     playerOne.gameboard.placeShip(Ship(3), { x: 0, y: 2, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(3), { x: 4, y: 2, horizontally: true });
+    playerOne.gameboard.placeShip(Ship(3), { x: 3, y: 2, horizontally: true });
     playerOne.gameboard.placeShip(Ship(2), { x: 6, y: 5, horizontally: true });
-    playerTwo.gameboard.placeShip(Ship(5), { x: 1, y: 8, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(4), { x: 2, y: 6, vertically: true });
+    playerTwo.gameboard.placeShip(Ship(5), { x: 1, y: 3, vertically: true });
+    playerTwo.gameboard.placeShip(Ship(4), { x: 2, y: 2, vertically: true });
     playerTwo.gameboard.placeShip(Ship(3), { x: 5, y: 5, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(3), { x: 4, y: 9, vertically: true });
+    playerTwo.gameboard.placeShip(Ship(3), { x: 4, y: 7, vertically: true });
     playerTwo.gameboard.placeShip(Ship(2), { x: 9, y: 3, vertically: true });
   };
 
