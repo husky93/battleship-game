@@ -2,13 +2,13 @@ import elementsDOM from './elementsDOM';
 
 const dragdrop = (() => {
   const dragContainer = elementsDOM.createWrapper(['container', 'drag'], 'div');
-  const carrier = elementsDOM.createDraggableShip(5, true);
+  const carrier = elementsDOM.createDraggableShip(5);
   const battleship = elementsDOM.createDraggableShip(4);
   const destroyer = elementsDOM.createDraggableShip(3);
   const submarine = elementsDOM.createDraggableShip(3);
   const patrol = elementsDOM.createDraggableShip(2);
   let dragSrcEl;
-  let mode = 'vertical';
+  let mode = 'horizontal';
   let draggingWidth = null;
 
   const shipsArray = [carrier, battleship, destroyer, submarine, patrol];
@@ -36,6 +36,12 @@ const dragdrop = (() => {
       }
     }
     if (mode === 'vertical') {
+      for (let i = 0; i < width; i += 1) {
+        const tile = document.querySelector(
+          `[data-x='${x}'][data-y='${y + i}']`
+        );
+        tile.classList.toggle('active');
+      }
     }
   }
 
@@ -94,9 +100,6 @@ const dragdrop = (() => {
     const x = parseInt(this.dataset.x, 10);
     const y = parseInt(this.dataset.y, 10);
     const width = parseInt(draggingWidth, 10);
-    console.log(x);
-    console.log(width);
-    console.log(isOutOfBounds(x, y, width));
     if (
       dragSrcEl !== this &&
       !this.classList.contains('active') &&
