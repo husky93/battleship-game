@@ -10,11 +10,14 @@ const dragdrop = (() => {
   let dragSrcEl;
   let mode = 'horizontal';
   let draggingWidth = null;
+  let dropped = false;
 
   const shipsArray = [carrier, battleship, destroyer, submarine, patrol];
 
   function handleDragStart(e) {
     this.style.opacity = '0';
+    this.style.zIndex = '-999';
+    dropped = false;
     dragSrcEl = this;
     draggingWidth = e.srcElement.dataset.width;
     e.dataTransfer.effectAllowed = 'move';
@@ -24,8 +27,8 @@ const dragdrop = (() => {
   function toggleActive(ship) {
     const width = parseInt(ship.dataset.width, 10);
     const firstTile = ship.parentElement;
-    const x = parseInt(firstTile.dataset.x);
-    const y = parseInt(firstTile.dataset.y);
+    const x = parseInt(firstTile.dataset.x, 10);
+    const y = parseInt(firstTile.dataset.y, 10);
 
     if (mode === 'horizontal') {
       for (let i = 0; i < width; i += 1) {
@@ -47,6 +50,8 @@ const dragdrop = (() => {
 
   function handleDragStartPlaced(e) {
     this.style.opacity = '0';
+    this.style.zIndex = '-999';
+    dropped = false;
     dragSrcEl = this;
     draggingWidth = e.srcElement.dataset.width;
     e.dataTransfer.effectAllowed = 'move';
@@ -56,9 +61,15 @@ const dragdrop = (() => {
 
   function handleDragEnd(e) {
     this.style.opacity = '1';
+    this.style.zIndex = '20';
     shipsArray.forEach((item) => {
       item.classList.remove('over');
     });
+    if (e.dataTransfer.dropEffect !== 'none' && dropped) {
+      this.remove();
+    } else {
+      toggleActive(this);
+    }
   }
 
   function handleDragOver(e) {
@@ -75,6 +86,7 @@ const dragdrop = (() => {
   }
 
   const addSingleShipListeners = (ship) => {
+    ship.removeEventListener('dragstart', handleDragStart);
     ship.addEventListener('dragstart', handleDragStartPlaced);
     ship.addEventListener('dragend', handleDragEnd);
   };
@@ -105,12 +117,15 @@ const dragdrop = (() => {
       !this.classList.contains('active') &&
       !isOutOfBounds(x, y, width)
     ) {
+      dropped = true;
       dragSrcEl.innerHTML = this.innerHTML;
       this.innerHTML = e.dataTransfer.getData('text/html');
+      e.dataTransfer.clearData();
       const ship = this.firstElementChild;
-      this.firstElementChild.style.opacity = '1';
-      addSingleShipListeners(ship);
       toggleActive(ship);
+      this.firstElementChild.style.opacity = '1';
+      this.firstElementChild.style.zIndex = '20';
+      addSingleShipListeners(ship);
     }
     return false;
   }
