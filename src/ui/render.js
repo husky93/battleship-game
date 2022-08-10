@@ -27,19 +27,31 @@ const render = (() => {
       'div'
     );
     const btnHorizontal = elementsDOM.createButton(
-      ['btn', 'btn--primary', 'btn-horizontal', 'btn-toggle-left'],
+      [
+        'btn',
+        'btn--primary',
+        'btn-horizontal',
+        'btn-toggle-left',
+        'btn-toggle-orient',
+      ],
       'horizontal'
     );
     const btnVertical = elementsDOM.createButton(
-      ['btn', 'btn--primary', 'btn-vertical', 'btn-toggle-right'],
+      [
+        'btn',
+        'btn--primary',
+        'btn-vertical',
+        'btn-toggle-right',
+        'btn-toggle-orient',
+      ],
       'vertical'
     );
     const btnReset = elementsDOM.createButton(
       ['btn', 'btn--primary', 'reset'],
       'Reset'
     );
+    btnHorizontal.classList.toggle('active');
     orientationToggler.append(btnHorizontal, btnVertical);
-
     uiWrapper.append(orientationToggler, btnReset);
     boardWrapper.append(dragDrop, boardPlace);
     main.append(boardWrapper, uiWrapper);

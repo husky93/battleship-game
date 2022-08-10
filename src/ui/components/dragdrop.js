@@ -15,53 +15,45 @@ const dragdrop = (() => {
   const shipsArray = [carrier, battleship, destroyer, submarine, patrol];
 
   const toggleActiveHorizontal = (x, y, width, toggle) => {
-    if (mode === 'horizontal') {
-      for (let i = -1; i < width + 1; i += 1) {
-        const tile = document.querySelector(
-          `[data-x='${x + i}'][data-y='${y}']`
+    for (let i = -1; i < width + 1; i += 1) {
+      const tile = document.querySelector(`[data-x='${x + i}'][data-y='${y}']`);
+      if (tile && toggle.add) tile.classList.add('active');
+      if (tile && toggle.remove) tile.classList.remove('active');
+      if (y - 1 >= 0) {
+        const tileAbove = document.querySelector(
+          `[data-x='${x + i}'][data-y='${y - 1}']`
         );
-        if (tile && toggle.add) tile.classList.add('active');
-        if (tile && toggle.remove) tile.classList.remove('active');
-        if (y - 1 >= 0) {
-          const tileAbove = document.querySelector(
-            `[data-x='${x + i}'][data-y='${y - 1}']`
-          );
-          if (tileAbove && toggle.add) tileAbove.classList.add('active');
-          if (tileAbove && toggle.remove) tileAbove.classList.remove('active');
-        }
-        if (y + 1 <= 9) {
-          const tileBelow = document.querySelector(
-            `[data-x='${x + i}'][data-y='${y + 1}']`
-          );
-          if (tileBelow && toggle.add) tileBelow.classList.add('active');
-          if (tileBelow && toggle.remove) tileBelow.classList.remove('active');
-        }
+        if (tileAbove && toggle.add) tileAbove.classList.add('active');
+        if (tileAbove && toggle.remove) tileAbove.classList.remove('active');
+      }
+      if (y + 1 <= 9) {
+        const tileBelow = document.querySelector(
+          `[data-x='${x + i}'][data-y='${y + 1}']`
+        );
+        if (tileBelow && toggle.add) tileBelow.classList.add('active');
+        if (tileBelow && toggle.remove) tileBelow.classList.remove('active');
       }
     }
   };
 
   const toggleActiveVertical = (x, y, width, toggle) => {
-    if (mode === 'vertical') {
-      for (let i = -1; i < width + 1; i += 1) {
-        const tile = document.querySelector(
-          `[data-x='${x}'][data-y='${y + i}']`
+    for (let i = -1; i < width + 1; i += 1) {
+      const tile = document.querySelector(`[data-x='${x}'][data-y='${y + i}']`);
+      if (tile && toggle.add) tile.classList.add('active');
+      if (tile && toggle.remove) tile.classList.remove('active');
+      if (x - 1 >= 0) {
+        const tileLeft = document.querySelector(
+          `[data-x='${x - 1}'][data-y='${y + i}']`
         );
-        if (tile && toggle.add) tile.classList.add('active');
-        if (tile && toggle.remove) tile.classList.remove('active');
-        if (x - 1 >= 0) {
-          const tileLeft = document.querySelector(
-            `[data-x='${x - 1}'][data-y='${y + i}']`
-          );
-          if (tileLeft && toggle.add) tileLeft.classList.add('active');
-          if (tileLeft && toggle.remove) tileLeft.classList.remove('active');
-        }
-        if (x + 1 <= 9) {
-          const tileRight = document.querySelector(
-            `[data-x='${x + 1}'][data-y='${y + i}']`
-          );
-          if (tileRight && toggle.add) tileRight.classList.add('active');
-          if (tileRight && toggle.remove) tileRight.classList.remove('active');
-        }
+        if (tileLeft && toggle.add) tileLeft.classList.add('active');
+        if (tileLeft && toggle.remove) tileLeft.classList.remove('active');
+      }
+      if (x + 1 <= 9) {
+        const tileRight = document.querySelector(
+          `[data-x='${x + 1}'][data-y='${y + i}']`
+        );
+        if (tileRight && toggle.add) tileRight.classList.add('active');
+        if (tileRight && toggle.remove) tileRight.classList.remove('active');
       }
     }
   };
@@ -71,9 +63,12 @@ const dragdrop = (() => {
     const firstTile = ship.parentElement;
     const x = parseInt(firstTile.dataset.x, 10);
     const y = parseInt(firstTile.dataset.y, 10);
-
-    toggleActiveHorizontal(x, y, width, toggle);
-    toggleActiveVertical(x, y, width, toggle);
+    if (!ship.classList.contains('vertical')) {
+      toggleActiveHorizontal(x, y, width, toggle);
+    }
+    if (ship.classList.contains('vertical')) {
+      toggleActiveVertical(x, y, width, toggle);
+    }
   };
 
   const toggleActiveDragStart = (ship) => {
@@ -86,19 +81,26 @@ const dragdrop = (() => {
 
   const switchMode = (string) => {
     mode = string;
+    const ships = dragContainer.childNodes;
     if (string === 'vertical')
-      shipsArray.forEach((ship) => ship.classList.add('vertical'));
+      ships.forEach((ship) => ship.classList.add('vertical'));
     if (string === 'horizontal')
-      shipsArray.forEach((ship) => ship.classList.remove('vertical'));
+      ships.forEach((ship) => ship.classList.remove('vertical'));
   };
 
   const reset = () => {
     const ships = document.querySelectorAll('.ship');
+    const tiles = document.querySelectorAll('.tile');
     ships.forEach((ship) => {
-      toggleActive(ship, { remove: true });
       ship.remove();
       dragContainer.appendChild(ship);
+      if (ship.classList.contains('vertical'))
+        ship.classList.remove('vertical');
     });
+    tiles.forEach((tile) => {
+      tile.classList.remove('active');
+    });
+    mode = 'horizontal';
   };
 
   function handleDragStart(e) {
@@ -112,6 +114,11 @@ const dragdrop = (() => {
   }
 
   function handleDragStartPlaced(e) {
+    if (this.classList.contains('vertical')) {
+      mode = 'vertical';
+    } else {
+      mode = 'horizontal';
+    }
     this.style.opacity = '0';
     this.style.zIndex = '0';
     dropped = false;
@@ -123,6 +130,8 @@ const dragdrop = (() => {
   }
 
   function handleDragEnd(e) {
+    const btnOrient = document.querySelector('.btn-toggle-orient.active');
+    mode = btnOrient.textContent;
     this.style.opacity = '1';
     this.style.zIndex = '20';
     shipsArray.forEach((item) => {

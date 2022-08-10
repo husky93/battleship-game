@@ -3,9 +3,11 @@ const controller = (() => {
     btn.addEventListener('click', cb);
   };
 
-  const addSwitchModeListeners = (btn, cb) => {
+  const addSwitchModeListeners = (btn, secondBtn, cb) => {
     btn.addEventListener('click', () => {
       cb(btn.textContent);
+      btn.classList.toggle('active');
+      secondBtn.classList.toggle('active');
     });
   };
   const handlePlaceRendered = (msg, object) => {
@@ -14,8 +16,8 @@ const controller = (() => {
     const btnHorizontal = wrapper.querySelector('.btn-horizontal');
     const btnVertical = wrapper.querySelector('.btn-vertical');
     addResetListeners(btnReset, object.reset);
-    addSwitchModeListeners(btnHorizontal, object.switchMode);
-    addSwitchModeListeners(btnVertical, object.switchMode);
+    addSwitchModeListeners(btnHorizontal, btnVertical, object.switchMode);
+    addSwitchModeListeners(btnVertical, btnHorizontal, object.switchMode);
   };
   return { handlePlaceRendered };
 })();
