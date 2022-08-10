@@ -66,6 +66,10 @@ const dragdrop = (() => {
     }
   };
 
+  // const reset = () => {
+
+  // }
+
   const toggleActive = (ship, toggle = {}) => {
     const width = parseInt(ship.dataset.width, 10);
     const firstTile = ship.parentElement;

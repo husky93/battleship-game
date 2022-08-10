@@ -20,6 +20,16 @@ const elementsDOM = (() => {
     return tile;
   };
 
+  const createButton = ([...classList], text, type) => {
+    const button = document.createElement('button');
+    classList.forEach((item) => button.classList.add(item));
+    button.textContent = text;
+    if (type) {
+      button.type = type;
+    }
+    return button;
+  };
+
   const createDraggableShip = (width, vertical) => {
     const ship = createWrapper(['ship', 'draggable'], 'div');
     if (vertical) ship.classList.add('vertical');
@@ -32,7 +42,13 @@ const elementsDOM = (() => {
 
     return ship;
   };
-  return { createWrapper, createImg, createBoardTile, createDraggableShip };
+  return {
+    createWrapper,
+    createImg,
+    createBoardTile,
+    createButton,
+    createDraggableShip,
+  };
 })();
 
 export default elementsDOM;
