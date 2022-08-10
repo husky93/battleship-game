@@ -23,6 +23,18 @@ const Gameboard = () => {
     return false;
   };
 
+  const canPlaceShip = (ship, options) => {
+    if (isTileTaken(options.x, options.y)) return false;
+    for (let i = 0; i < ship.length; i += 1) {
+      const xCoord = options.horizontally ? options.x + i : options.x;
+      const yCoord = options.horizontally ? options.y : options.y + i;
+      const nextTile = board[yCoord][xCoord];
+
+      if (nextTile && isTileTaken(nextTile.x, nextTile.y)) return false;
+    }
+    return true;
+  };
+
   function handleErrorsPlaceShip(ship, options) {
     const MAX_INDEX = 9;
     if (arguments.length < 2)
@@ -48,6 +60,9 @@ const Gameboard = () => {
       (options.vertically && options.y + ship.length - 1 > MAX_INDEX)
     )
       throw new Error("You're trying to place ship out of gameboard bounds");
+
+    if (!canPlaceShip(ship, options))
+      throw new Error('You cannot place ship on this square');
   }
 
   const placeShipVertically = (ship, x, y) => {

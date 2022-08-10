@@ -112,7 +112,7 @@ test('playTurn method changes player turn after hitting empty square', () => {
   game.startGame();
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
-  game.playTurn({ x: 3, y: 3 });
+  game.playTurn({ x: 1, y: 0 });
   expect(game.playerOne.player.isMyTurn).toBe(false);
   expect(game.playerTwo.player.isMyTurn).toBe(true);
 });

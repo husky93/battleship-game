@@ -16,15 +16,15 @@ const game = (() => {
   };
 
   const placeShips = () => {
-    playerOne.gameboard.placeShip(Ship(5), { x: 1, y: 0, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(4), { x: 0, y: 1, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(3), { x: 0, y: 2, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(3), { x: 3, y: 2, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(2), { x: 6, y: 5, horizontally: true });
+    playerOne.gameboard.placeShip(Ship(5), { x: 0, y: 0, horizontally: true });
+    playerOne.gameboard.placeShip(Ship(4), { x: 0, y: 2, horizontally: true });
+    playerOne.gameboard.placeShip(Ship(3), { x: 0, y: 4, horizontally: true });
+    playerOne.gameboard.placeShip(Ship(3), { x: 5, y: 4, horizontally: true });
+    playerOne.gameboard.placeShip(Ship(2), { x: 0, y: 6, horizontally: true });
     playerTwo.gameboard.placeShip(Ship(5), { x: 1, y: 3, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(4), { x: 2, y: 2, vertically: true });
+    playerTwo.gameboard.placeShip(Ship(4), { x: 3, y: 2, vertically: true });
     playerTwo.gameboard.placeShip(Ship(3), { x: 5, y: 5, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(3), { x: 4, y: 7, vertically: true });
+    playerTwo.gameboard.placeShip(Ship(3), { x: 7, y: 7, vertically: true });
     playerTwo.gameboard.placeShip(Ship(2), { x: 9, y: 3, vertically: true });
   };
 
@@ -46,7 +46,10 @@ const game = (() => {
   };
 
   const playTurn = (coordinates = {}) => {
-    if (playerOne.player.isMyTurn && (!coordinates.x || !coordinates.y))
+    if (
+      playerOne.player.isMyTurn &&
+      (typeof coordinates.x !== 'number' || typeof coordinates.y !== 'number')
+    )
       throw new Error('Specify coordinates for non-ai player');
     let hitTile = null;
     if (playerOne.player.isMyTurn) {

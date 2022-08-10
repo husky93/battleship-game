@@ -161,16 +161,19 @@ test('placeShip method throws error when both directions specified', () => {
 });
 
 test('placeShip method throws error when ship is placed out of bounds', () => {
-  const object = Gameboard();
+  let object = Gameboard();
   expect(() =>
     object.placeShip(mockShip(3), { x: 8, y: 8, horizontally: true })
   ).toThrow();
+  object = Gameboard();
   expect(() =>
     object.placeShip(mockShip(2), { x: 8, y: 8, horizontally: true })
   ).not.toThrow();
+  object = Gameboard();
   expect(() =>
     object.placeShip(mockShip(3), { x: 9, y: 8, vertically: true })
   ).toThrow();
+  object = Gameboard();
   expect(() =>
     object.placeShip(mockShip(3), { x: 9, y: 7, vertically: true })
   ).not.toThrow();
