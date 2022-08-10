@@ -131,6 +131,11 @@ test('placeShip method throws error when both directions specified', () => {
   ).toThrow();
 });
 
+test('placeShip prohibits placing ships next to eachother', () => {
+  const object = Gameboard();
+  expect((e) => e).toBe(null);
+});
+
 test('placeShip method throws error when ship is placed out of bounds', () => {
   const object = Gameboard();
   expect(() =>
