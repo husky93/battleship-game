@@ -84,6 +84,14 @@ const dragdrop = (() => {
     shipsFiltered.forEach((item) => toggleActive(item, { add: true }));
   };
 
+  const switchMode = (string) => {
+    mode = string;
+    if (string === 'vertical')
+      shipsArray.forEach((ship) => ship.classList.add('vertical'));
+    if (string === 'horizontal')
+      shipsArray.forEach((ship) => ship.classList.remove('vertical'));
+  };
+
   const reset = () => {
     const ships = document.querySelectorAll('.ship');
     ships.forEach((ship) => {
@@ -218,7 +226,7 @@ const dragdrop = (() => {
     dragContainer.append(carrier, battleship, destroyer, submarine, patrol);
     return dragContainer;
   };
-  return { createDragDrop, reset };
+  return { createDragDrop, reset, switchMode };
 })();
 
 export default dragdrop;

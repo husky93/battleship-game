@@ -22,16 +22,31 @@ const render = (() => {
     const boardPlace = createBoard('place', placeGameboard.board);
     const dragDrop = dragdrop.createDragDrop(boardPlace);
     const uiWrapper = elementsDOM.createWrapper(['place-ui'], 'div');
+    const orientationToggler = elementsDOM.createWrapper(
+      ['container', 'orient-toggler'],
+      'div'
+    );
+    const btnHorizontal = elementsDOM.createButton(
+      ['btn', 'btn--primary', 'btn-horizontal', 'btn-toggle-left'],
+      'horizontal'
+    );
+    const btnVertical = elementsDOM.createButton(
+      ['btn', 'btn--primary', 'btn-vertical', 'btn-toggle-right'],
+      'vertical'
+    );
     const btnReset = elementsDOM.createButton(
       ['btn', 'btn--primary', 'reset'],
       'Reset'
     );
-    uiWrapper.append(btnReset);
+    orientationToggler.append(btnHorizontal, btnVertical);
+
+    uiWrapper.append(orientationToggler, btnReset);
     boardWrapper.append(dragDrop, boardPlace);
     main.append(boardWrapper, uiWrapper);
     PubSub.publish('PLACE RENDERED', {
       container: uiWrapper,
       reset: dragdrop.reset,
+      switchMode: dragdrop.switchMode,
     });
   };
 
