@@ -2,13 +2,13 @@ import elementsDOM from './elementsDOM';
 
 const dragdrop = (() => {
   const dragContainer = elementsDOM.createWrapper(['container', 'drag'], 'div');
-  const carrier = elementsDOM.createDraggableShip(5, true);
-  const battleship = elementsDOM.createDraggableShip(4, true);
+  const carrier = elementsDOM.createDraggableShip(5);
+  const battleship = elementsDOM.createDraggableShip(4);
   const destroyer = elementsDOM.createDraggableShip(3);
   const submarine = elementsDOM.createDraggableShip(3);
   const patrol = elementsDOM.createDraggableShip(2);
   let dragSrcEl;
-  let mode = 'vertical';
+  let mode = 'horizontal';
   let draggingWidth = null;
   let dropped = false;
 

@@ -45,13 +45,14 @@ test('Board property contains 10 arrays and each of those arrays contains 10 obj
   });
 });
 
-test('Every tile object has a ship, index, isHit, x, y properties', () => {
+test('Every tile object has a ship, index, isHit, x, y, isTaken properties', () => {
   const object = Gameboard();
   object.board.forEach((item) => {
     item.forEach((tile) => {
       expect(tile.ship).toBeDefined();
       expect(tile.index).toBeDefined();
       expect(tile.isHit).toBeDefined();
+      expect(tile.isTaken).toBeDefined();
       expect(tile.x).toBeDefined();
       expect(tile.y).toBeDefined();
     });
@@ -119,6 +120,34 @@ test('placeShip method throws error when there is no direction specified', () =>
   expect(() => object.placeShip(mockShip(2), { x: 2, y: 4 })).toThrow();
 });
 
+test('placeShip method throws error when trying to place ship on another ship', () => {
+  const object = Gameboard();
+  object.placeShip(mockShip(5), { x: 5, y: 2, horizontally: true });
+  expect(() =>
+    object.placeShip(mockShip(4), { x: 5, y: 2, horizontally: true })
+  ).toThrow();
+  expect(() =>
+    object.placeShip(mockShip(4), { x: 6, y: 2, horizontally: true })
+  ).toThrow();
+  expect(() =>
+    object.placeShip(mockShip(4), { x: 7, y: 0, vertically: true })
+  ).toThrow();
+});
+
+test('placeShip method throws error when trying to place ship next to another ship', () => {
+  const object = Gameboard();
+  object.placeShip(mockShip(5), { x: 5, y: 2, horizontally: true });
+  expect(() =>
+    object.placeShip(mockShip(4), { x: 2, y: 3, horizontally: true })
+  ).toThrow();
+  expect(() =>
+    object.placeShip(mockShip(4), { x: 1, y: 3, horizontally: true })
+  ).toThrow();
+  expect(() =>
+    object.placeShip(mockShip(4), { x: 4, y: 0, vertically: true })
+  ).toThrow();
+});
+
 test('placeShip method throws error when both directions specified', () => {
   const object = Gameboard();
   expect(() =>
@@ -129,11 +158,6 @@ test('placeShip method throws error when both directions specified', () => {
       vertically: true,
     })
   ).toThrow();
-});
-
-test('placeShip prohibits placing ships next to eachother', () => {
-  const object = Gameboard();
-  expect((e) => e).toBe(null);
 });
 
 test('placeShip method throws error when ship is placed out of bounds', () => {
@@ -181,6 +205,41 @@ test('placeShip places the ship horizontally inside board array correctly', () =
     expect(tile.ship.length).toBe(4);
     expect(tile.index).toBe(index);
   });
+});
+
+test('placeShip changes isTaken tile prop to true correctly', () => {
+  const object = Gameboard();
+  object.placeShip(mockShip(4), { x: 1, y: 5, horizontally: true });
+  object.placeShip(mockShip(4), { x: 6, y: 1, vertically: true });
+  const tilesHor = [];
+  const tilesVer = [];
+  for (let i = -1; i < 5; i += 1) {
+    tilesHor.push(object.board[4][1 + i]);
+    tilesHor.push(object.board[5][1 + i]);
+    tilesHor.push(object.board[6][1 + i]);
+    tilesVer.push(object.board[1 + i][5]);
+    tilesVer.push(object.board[1 + i][6]);
+    tilesVer.push(object.board[1 + i][7]);
+  }
+  expect(object.board[5][0].isTaken).toBe(true);
+  expect(object.board[5][5].isTaken).toBe(true);
+  expect(object.board[0][6].isTaken).toBe(true);
+  expect(object.board[5][6].isTaken).toBe(true);
+  expect(tilesVer.length).toBe(18);
+  expect(tilesHor.length).toBe(18);
+  let isTakenVer = 0;
+  tilesVer.forEach((tile) => {
+    if (tile.isTaken) isTakenVer++;
+    expect(tile.isTaken).toBe(true);
+  });
+  expect(isTakenVer).toBe(18);
+  let isTakenHor = 0;
+  tilesHor.forEach((tile) => {
+    if (tile.isTaken) isTakenHor++;
+    expect(tile.isTaken).toBe(true);
+  });
+
+  expect(isTakenHor).toBe(18);
 });
 
 //  receiveAttack method
