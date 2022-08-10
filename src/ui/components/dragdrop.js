@@ -173,7 +173,6 @@ const dragdrop = (() => {
         return true;
       }
     }
-
     return false;
   };
 
@@ -187,9 +186,41 @@ const dragdrop = (() => {
       const nextTile = document.querySelector(
         `.tile[data-x="${xCoord}"][data-y="${yCoord}"]`
       );
-      if (nextTile.classList.contains('active')) return false;
+      if (nextTile && nextTile.classList.contains('active')) return false;
     }
     return true;
+  };
+
+  const placeRandomly = () => {
+    reset();
+    const ships = dragContainer.querySelectorAll('.ship');
+    const tiles = document.querySelectorAll('.tile');
+
+    ships.forEach((ship) => {
+      const randomNum = Math.floor(Math.random() * 2);
+      const length = parseInt(ship.dataset.width, 10);
+      const legalMoves = [];
+
+      if (randomNum === 1) {
+        ship.classList.add('vertical');
+        mode = 'vertical';
+      } else {
+        mode = 'horizontal';
+      }
+      tiles.forEach((tile) => {
+        const x = parseInt(tile.dataset.x, 10);
+        const y = parseInt(tile.dataset.y, 10);
+        if (canPlace(tile, length) && !isOutOfBounds(x, y, length)) {
+          legalMoves.push(tile);
+        }
+      });
+      const randomIndex = Math.floor(Math.random() * legalMoves.length);
+      const placingTile = legalMoves[randomIndex];
+      ship.remove();
+      placingTile.appendChild(ship);
+      addSingleShipListeners(ship);
+      toggleActive(ship, { add: true });
+    });
   };
 
   function handleDrop(e) {
@@ -235,7 +266,7 @@ const dragdrop = (() => {
     dragContainer.append(carrier, battleship, destroyer, submarine, patrol);
     return dragContainer;
   };
-  return { createDragDrop, reset, switchMode };
+  return { createDragDrop, reset, switchMode, placeRandomly };
 })();
 
 export default dragdrop;

@@ -50,15 +50,20 @@ const render = (() => {
       ['btn', 'btn--primary', 'reset'],
       'Reset'
     );
+    const btnRandom = elementsDOM.createButton(
+      ['btn', 'btn--primary', 'random'],
+      'Random'
+    );
     btnHorizontal.classList.toggle('active');
     orientationToggler.append(btnHorizontal, btnVertical);
-    uiWrapper.append(orientationToggler, btnReset);
+    uiWrapper.append(orientationToggler, btnReset, btnRandom);
     boardWrapper.append(dragDrop, boardPlace);
     main.append(boardWrapper, uiWrapper);
     PubSub.publish('PLACE RENDERED', {
       container: uiWrapper,
       reset: dragdrop.reset,
       switchMode: dragdrop.switchMode,
+      placeRandomly: dragdrop.placeRandomly,
     });
   };
 
