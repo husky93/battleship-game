@@ -1,6 +1,8 @@
+import PubSub from 'pubsub-js';
 import createBoard from './components/board';
 import dragdrop from './components/dragdrop';
 import Gameboard from '../modules/gameboard';
+import elementsDOM from './components/elementsDOM';
 
 const render = (() => {
   const main = document.querySelector('.main');
@@ -16,9 +18,21 @@ const render = (() => {
   const renderPlace = () => {
     clearMain();
     const placeGameboard = Gameboard();
+    const boardWrapper = elementsDOM.createWrapper(['place-wrapper'], 'div');
     const boardPlace = createBoard('place', placeGameboard.board);
     const dragDrop = dragdrop.createDragDrop(boardPlace);
-    main.append(dragDrop, boardPlace);
+    const uiWrapper = elementsDOM.createWrapper(['place-ui'], 'div');
+    const btnReset = elementsDOM.createButton(
+      ['btn', 'btn--primary', 'reset'],
+      'Reset'
+    );
+    uiWrapper.append(btnReset);
+    boardWrapper.append(dragDrop, boardPlace);
+    main.append(boardWrapper, uiWrapper);
+    PubSub.publish('PLACE RENDERED', {
+      container: uiWrapper,
+      reset: dragdrop.reset,
+    });
   };
 
   const renderGame = (game) => {

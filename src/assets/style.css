@@ -4,6 +4,7 @@
 
 .main {
   display: flex;
+  flex-direction: column;
 }
 
 .gameboard, .row, .tile, .ship-tile {
@@ -60,3 +61,5 @@
 .tile.over {
   border: 3px dotted #666;
 }
+
+.place-wrapper {display: flex;}

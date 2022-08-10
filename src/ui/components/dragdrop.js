@@ -66,10 +66,6 @@ const dragdrop = (() => {
     }
   };
 
-  // const reset = () => {
-
-  // }
-
   const toggleActive = (ship, toggle = {}) => {
     const width = parseInt(ship.dataset.width, 10);
     const firstTile = ship.parentElement;
@@ -86,6 +82,15 @@ const dragdrop = (() => {
     toggleActive(ship, { remove: true });
 
     shipsFiltered.forEach((item) => toggleActive(item, { add: true }));
+  };
+
+  const reset = () => {
+    const ships = document.querySelectorAll('.ship');
+    ships.forEach((ship) => {
+      toggleActive(ship, { remove: true });
+      ship.remove();
+      dragContainer.appendChild(ship);
+    });
   };
 
   function handleDragStart(e) {
@@ -213,7 +218,7 @@ const dragdrop = (() => {
     dragContainer.append(carrier, battleship, destroyer, submarine, patrol);
     return dragContainer;
   };
-  return { createDragDrop };
+  return { createDragDrop, reset };
 })();
 
 export default dragdrop;
