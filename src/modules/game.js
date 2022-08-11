@@ -24,11 +24,13 @@ const game = (() => {
       const placementOptions = { x, y, [direction]: true };
       playerOne.gameboard.placeShip(Ship(length), placementOptions);
     });
-    playerTwo.gameboard.placeShip(Ship(5), { x: 1, y: 3, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(4), { x: 3, y: 2, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(3), { x: 5, y: 5, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(3), { x: 7, y: 7, vertically: true });
-    playerTwo.gameboard.placeShip(Ship(2), { x: 9, y: 3, vertically: true });
+    playerTwo.gameboard.placeShipsRandomly([
+      Ship(5),
+      Ship(4),
+      Ship(3),
+      Ship(3),
+      Ship(2),
+    ]);
   };
 
   const startGame = (data) => {

@@ -148,18 +148,37 @@ test('playTurn method doesnt throw error if no coordinates specified and player 
 
 test('playTurn method changes player turn after hitting empty square', () => {
   game.startGame(mockPlacementData);
+  let firstEmptyTile;
+  game.playerTwo.gameboard.board[0].every((tile) => {
+    if (!tile.ship) {
+      firstEmptyTile = tile;
+      return false;
+    }
+    return true;
+  });
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
-  game.playTurn({ x: 1, y: 0 });
+  game.playTurn({ x: firstEmptyTile.x, y: firstEmptyTile.y });
   expect(game.playerOne.player.isMyTurn).toBe(false);
   expect(game.playerTwo.player.isMyTurn).toBe(true);
 });
 
 test('playTurn method doesnt change player turn after hitting ship', () => {
   game.startGame(mockPlacementData);
+  let firstShipTile;
+  game.playerTwo.gameboard.board.every((row) => {
+    const temp = row.every((tile) => {
+      if (tile.ship) {
+        firstShipTile = tile;
+        return false;
+      }
+      return true;
+    });
+    return temp;
+  });
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
-  game.playTurn({ x: 5, y: 5 });
+  game.playTurn({ x: firstShipTile.x, y: firstShipTile.y });
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
 });
