@@ -1,3 +1,5 @@
+import PubSub from 'pubsub-js';
+
 const controller = (() => {
   const addBtnListeners = (btn, cb) => {
     btn.addEventListener('click', cb);
@@ -10,18 +12,33 @@ const controller = (() => {
       secondBtn.classList.remove('active');
     });
   };
+
+  const addStartListeners = (btn) => {
+    btn.addEventListener('click', () => {
+      if (!btn.disabled) PubSub.publish('GAME STARTED');
+    });
+  };
+
   const handlePlaceRendered = (msg, object) => {
     const wrapper = object.container;
     const btnReset = wrapper.querySelector('.reset');
     const btnRandom = wrapper.querySelector('.random');
     const btnHorizontal = wrapper.querySelector('.btn-horizontal');
     const btnVertical = wrapper.querySelector('.btn-vertical');
+    const btnStart = document.querySelector('.start');
+    addStartListeners(btnStart);
     addBtnListeners(btnReset, object.reset);
     addBtnListeners(btnRandom, object.placeRandomly);
     addSwitchModeListeners(btnHorizontal, btnVertical, object.switchMode);
     addSwitchModeListeners(btnVertical, btnHorizontal, object.switchMode);
   };
-  return { handlePlaceRendered };
+
+  const handleShipsPlaced = () => {
+    const btnStart = document.querySelector('.start');
+    btnStart.disabled = false;
+  };
+
+  return { handlePlaceRendered, handleShipsPlaced };
 })();
 
 export default controller;

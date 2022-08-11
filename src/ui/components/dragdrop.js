@@ -1,3 +1,4 @@
+import PubSub from 'pubsub-js';
 import elementsDOM from './elementsDOM';
 
 const dragdrop = (() => {
@@ -91,6 +92,7 @@ const dragdrop = (() => {
   const reset = () => {
     const ships = document.querySelectorAll('.ship');
     const tiles = document.querySelectorAll('.tile');
+    const startBtn = document.querySelector('.start');
     ships.forEach((ship) => {
       ship.remove();
       dragContainer.appendChild(ship);
@@ -101,6 +103,16 @@ const dragdrop = (() => {
       tile.classList.remove('active');
     });
     mode = 'horizontal';
+    startBtn.disabled = true;
+  };
+
+  const isAllShipsPlaced = () => {
+    if (dragContainer.childNodes.length === 0) return true;
+    return false;
+  };
+
+  const handleAllShipsPlaced = () => {
+    PubSub.publish('SHIPS PLACED');
   };
 
   function handleDragStart(e) {
@@ -226,6 +238,7 @@ const dragdrop = (() => {
       toggleActive(ship, { add: true });
       return true;
     });
+    handleAllShipsPlaced();
   };
 
   function handleDrop(e) {
@@ -248,6 +261,8 @@ const dragdrop = (() => {
       this.firstElementChild.style.opacity = '1';
       this.firstElementChild.style.zIndex = '20';
       addSingleShipListeners(ship);
+      if (isAllShipsPlaced()) handleAllShipsPlaced();
+      return true;
     }
     return false;
   }

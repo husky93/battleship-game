@@ -60,8 +60,8 @@ const render = (() => {
       { disabled: true }
     );
     btnHorizontal.classList.toggle('active');
-    orientationToggler.append(btnHorizontal, btnVertical, btnStart);
-    uiWrapper.append(orientationToggler, btnReset, btnRandom);
+    orientationToggler.append(btnHorizontal, btnVertical);
+    uiWrapper.append(orientationToggler, btnReset, btnRandom, btnStart);
     boardWrapper.append(dragDrop, boardPlace);
     main.append(boardWrapper, uiWrapper);
     PubSub.publish('PLACE RENDERED', {
