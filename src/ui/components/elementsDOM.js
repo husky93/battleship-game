@@ -20,12 +20,15 @@ const elementsDOM = (() => {
     return tile;
   };
 
-  const createButton = ([...classList], text, type) => {
+  const createButton = ([...classList], text, options = {}) => {
     const button = document.createElement('button');
     classList.forEach((item) => button.classList.add(item));
     button.textContent = text;
-    if (type) {
-      button.type = type;
+    if (options.type) {
+      button.type = options.type;
+    }
+    if (options.disabled) {
+      button.disabled = true;
     }
     return button;
   };

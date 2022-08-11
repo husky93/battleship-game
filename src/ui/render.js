@@ -54,8 +54,13 @@ const render = (() => {
       ['btn', 'btn--primary', 'random'],
       'Random'
     );
+    const btnStart = elementsDOM.createButton(
+      ['btn', 'btn--primary', 'start'],
+      'Start',
+      { disabled: true }
+    );
     btnHorizontal.classList.toggle('active');
-    orientationToggler.append(btnHorizontal, btnVertical);
+    orientationToggler.append(btnHorizontal, btnVertical, btnStart);
     uiWrapper.append(orientationToggler, btnReset, btnRandom);
     boardWrapper.append(dragDrop, boardPlace);
     main.append(boardWrapper, uiWrapper);

@@ -215,7 +215,6 @@ const dragdrop = (() => {
         }
       });
       if (legalMoves.length === 0) {
-        console.log('no legal moves');
         placeRandomly();
         return false;
       }
