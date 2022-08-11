@@ -151,6 +151,7 @@ const dragdrop = (() => {
     });
     if (e.dataTransfer.dropEffect !== 'none' && dropped) {
       this.remove();
+      if (isAllShipsPlaced()) handleAllShipsPlaced();
     } else if (this.parentElement.classList.contains('tile'))
       toggleActive(this, { add: true });
   }
@@ -261,8 +262,6 @@ const dragdrop = (() => {
       this.firstElementChild.style.opacity = '1';
       this.firstElementChild.style.zIndex = '20';
       addSingleShipListeners(ship);
-      if (isAllShipsPlaced()) handleAllShipsPlaced();
-      return true;
     }
     return false;
   }
