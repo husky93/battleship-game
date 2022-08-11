@@ -15,6 +15,7 @@ PubSub.subscribe('GAME STARTED', (msg, data) =>
 PubSub.subscribe('GAME RENDERED', controller.handleGameRendered);
 PubSub.subscribe('TURN PLAYED', controller.handleTurnPlayed);
 PubSub.subscribe('AI MOVE PLAYED', controller.handleAITurnPlayed);
+PubSub.subscribe('GAME OVER', controller.handleGameOver);
 // game.startGame();
 // render.renderGame(game);
 render.renderPlace();

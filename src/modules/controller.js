@@ -20,7 +20,8 @@ const controller = (() => {
     });
   };
 
-  const handleTileClick = (e, game) => {
+  const handleTileClick = (e) => {
+    const { game } = e.currentTarget;
     const x = parseInt(e.target.dataset.x, 10);
     const y = parseInt(e.target.dataset.y, 10);
     const isTileHit = game.playerTwo.gameboard.board[y][x].isHit;
@@ -33,7 +34,14 @@ const controller = (() => {
   };
 
   const addTileListeners = (tile, game) => {
-    tile.addEventListener('click', (e) => handleTileClick(e, game));
+    const selectedTile = tile;
+    selectedTile.addEventListener('click', handleTileClick);
+    selectedTile.game = game;
+  };
+
+  const removeTileListeners = (tile, game) => {
+    const selectedTile = tile;
+    selectedTile.removeEventListener('click', handleTileClick);
   };
 
   const handlePlaceRendered = (msg, object) => {
@@ -81,6 +89,13 @@ const controller = (() => {
     game.startGame(placementData);
   };
 
+  const handleGameOver = (msg, game) => {
+    const gameboardTwo = document.querySelector('.gameboard--p2');
+    const tiles = gameboardTwo.querySelectorAll('.tile');
+    tiles.forEach((tile) => removeTileListeners(tile, game));
+    console.log('game over');
+  };
+
   return {
     handlePlaceRendered,
     handleGameRendered,
@@ -88,6 +103,7 @@ const controller = (() => {
     handleGameStart,
     handleTurnPlayed,
     handleAITurnPlayed,
+    handleGameOver,
   };
 })();
 

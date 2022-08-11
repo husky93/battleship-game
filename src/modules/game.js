@@ -74,8 +74,9 @@ const game = (() => {
       PubSub.publish('AI MOVE PLAYED', hitTile);
     }
     if (isGameOver()) {
-      PubSub.publish('GAME OVER');
+      PubSub.publish('GAME OVER', game);
       gameOver = true;
+      return true;
     }
     if (!hitTile.ship) {
       playerOne.player.changeTurn();
