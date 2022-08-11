@@ -33,9 +33,10 @@ const controller = (() => {
     addSwitchModeListeners(btnVertical, btnHorizontal, object.switchMode);
   };
 
-  const handleShipsPlaced = () => {
+  const handleShipsPlaced = (msg, data) => {
     const btnStart = document.querySelector('.start');
     btnStart.disabled = false;
+    console.log(data);
   };
 
   return { handlePlaceRendered, handleShipsPlaced };

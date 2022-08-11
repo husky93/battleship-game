@@ -111,8 +111,24 @@ const dragdrop = (() => {
     return false;
   };
 
+  const getPlacementData = () => {
+    const ships = document.querySelectorAll('.ship');
+    const data = [];
+    ships.forEach((ship) => {
+      const shipData = {
+        length: parseInt(ship.dataset.width, 10),
+        vertically: ship.classList.contains('vertical'),
+        horizontally: !ship.classList.contains('vertical'),
+        x: parseInt(ship.parentElement.dataset.x, 10),
+        y: parseInt(ship.parentElement.dataset.y, 10),
+      };
+      data.push(shipData);
+    });
+    return data;
+  };
+
   const handleAllShipsPlaced = () => {
-    PubSub.publish('SHIPS PLACED');
+    PubSub.publish('SHIPS PLACED', getPlacementData());
   };
 
   function handleDragStart(e) {
@@ -285,7 +301,7 @@ const dragdrop = (() => {
     dragContainer.append(carrier, battleship, destroyer, submarine, patrol);
     return dragContainer;
   };
-  return { createDragDrop, reset, switchMode, placeRandomly };
+  return { createDragDrop, reset, switchMode, placeRandomly, getPlacementData };
 })();
 
 export default dragdrop;
