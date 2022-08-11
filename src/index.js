@@ -12,7 +12,9 @@ PubSub.subscribe('GAME STARTED', (msg, data) =>
 PubSub.subscribe('GAME STARTED', (msg, data) =>
   render.renderGame(msg, data, game)
 );
-
+PubSub.subscribe('GAME RENDERED', controller.handleGameRendered);
+PubSub.subscribe('TURN PLAYED', controller.handleTurnPlayed);
+PubSub.subscribe('AI MOVE PLAYED', controller.handleAITurnPlayed);
 // game.startGame();
 // render.renderGame(game);
 render.renderPlace();

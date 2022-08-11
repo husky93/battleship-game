@@ -78,8 +78,9 @@ const render = (() => {
       showShip: true,
     });
     const boardTwo = createBoard('p2', game.playerTwo.gameboard.board);
-
     main.append(boardOne, boardTwo);
+
+    PubSub.publish('GAME RENDERED', game);
   };
 
   return { renderStart, renderPlace, renderGame };

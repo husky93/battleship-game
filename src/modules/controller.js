@@ -20,6 +20,22 @@ const controller = (() => {
     });
   };
 
+  const handleTileClick = (e, game) => {
+    const x = parseInt(e.target.dataset.x, 10);
+    const y = parseInt(e.target.dataset.y, 10);
+    const isTileHit = game.playerTwo.gameboard.board[y][x].isHit;
+    const isTileShip = game.playerTwo.gameboard.board[y][x].ship;
+    if (game.playerOne.player.isMyTurn && !isTileHit) {
+      game.playTurn({ x, y });
+      if (isTileShip) e.target.classList.add('tile--hitship');
+      else e.target.classList.add('tile--hit');
+    }
+  };
+
+  const addTileListeners = (tile, game) => {
+    tile.addEventListener('click', (e) => handleTileClick(e, game));
+  };
+
   const handlePlaceRendered = (msg, object) => {
     const wrapper = object.container;
     const btnReset = wrapper.querySelector('.reset');
@@ -34,6 +50,27 @@ const controller = (() => {
     addSwitchModeListeners(btnVertical, btnHorizontal, object.switchMode);
   };
 
+  const handleTurnPlayed = (msg, game) => {
+    if (game.playerTwo.player.isMyTurn) {
+      game.playTurn();
+    }
+  };
+
+  const handleAITurnPlayed = (msg, tile) => {
+    const gameboardNode = document.querySelector('.gameboard--p1');
+    const tileNode = gameboardNode.querySelector(
+      `.tile[data-x="${tile.x}"][data-y="${tile.y}"]`
+    );
+    if (tile.ship) tileNode.classList.add('tile--hitship');
+    else tileNode.classList.add('tile--hit');
+  };
+
+  const handleGameRendered = (msg, game) => {
+    const gameboardTwo = document.querySelector('.gameboard--p2');
+    const tiles = gameboardTwo.querySelectorAll('.tile');
+    tiles.forEach((tile) => addTileListeners(tile, game));
+  };
+
   const handleShipsPlaced = (msg, data) => {
     const btnStart = document.querySelector('.start');
     placementData = data;
@@ -44,7 +81,14 @@ const controller = (() => {
     game.startGame(placementData);
   };
 
-  return { handlePlaceRendered, handleShipsPlaced, handleGameStart };
+  return {
+    handlePlaceRendered,
+    handleGameRendered,
+    handleShipsPlaced,
+    handleGameStart,
+    handleTurnPlayed,
+    handleAITurnPlayed,
+  };
 })();
 
 export default controller;

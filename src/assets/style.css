@@ -38,6 +38,14 @@
   background-color: #000;
 }
 
+.tile.tile--hit {
+  background-color: green;
+}
+
+.tile.tile--hitship {
+  background-color: red;
+}
+
 .ship-tile {
   position:relative;
   width: 40px;

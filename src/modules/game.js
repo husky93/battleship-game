@@ -1,3 +1,4 @@
+import PubSub from 'pubsub-js';
 import Player from './player';
 import Gameboard from './gameboard';
 import Ship from './ship';
@@ -70,14 +71,17 @@ const game = (() => {
       const { x } = hitCoordinates;
       const { y } = hitCoordinates;
       hitTile = gameboard.board[y][x];
+      PubSub.publish('AI MOVE PLAYED', hitTile);
     }
     if (isGameOver()) {
+      PubSub.publish('GAME OVER');
       gameOver = true;
     }
     if (!hitTile.ship) {
       playerOne.player.changeTurn();
       playerTwo.player.changeTurn();
     }
+    PubSub.publish('TURN PLAYED', game);
   };
 
   return {
