@@ -193,10 +193,10 @@ const dragdrop = (() => {
 
   const placeRandomly = () => {
     reset();
-    const ships = dragContainer.querySelectorAll('.ship');
+    const ships = [...dragContainer.querySelectorAll('.ship')];
     const tiles = document.querySelectorAll('.tile');
 
-    ships.forEach((ship) => {
+    ships.every((ship) => {
       const randomNum = Math.floor(Math.random() * 2);
       const length = parseInt(ship.dataset.width, 10);
       const legalMoves = [];
@@ -214,12 +214,18 @@ const dragdrop = (() => {
           legalMoves.push(tile);
         }
       });
+      if (legalMoves.length === 0) {
+        console.log('no legal moves');
+        placeRandomly();
+        return false;
+      }
       const randomIndex = Math.floor(Math.random() * legalMoves.length);
       const placingTile = legalMoves[randomIndex];
       ship.remove();
       placingTile.appendChild(ship);
       addSingleShipListeners(ship);
       toggleActive(ship, { add: true });
+      return true;
     });
   };
 
