@@ -72,7 +72,7 @@ const render = (() => {
     });
   };
 
-  const renderGame = (game) => {
+  const renderGame = (msg, data, game) => {
     clearMain();
     const boardOne = createBoard('p1', game.playerOne.gameboard.board);
     const boardTwo = createBoard('p2', game.playerTwo.gameboard.board);

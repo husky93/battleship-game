@@ -1,4 +1,43 @@
 import game from '../../src/modules/game';
+
+const mockPlacementData = [
+  {
+    length: 3,
+    vertically: false,
+    horizontally: true,
+    x: 6,
+    y: 0,
+  },
+  {
+    length: 5,
+    vertically: true,
+    horizontally: false,
+    x: 1,
+    y: 3,
+  },
+  {
+    length: 3,
+    vertically: false,
+    horizontally: true,
+    x: 5,
+    y: 3,
+  },
+  {
+    length: 4,
+    vertically: true,
+    horizontally: false,
+    x: 7,
+    y: 5,
+  },
+  {
+    length: 2,
+    vertically: false,
+    horizontally: true,
+    x: 1,
+    y: 9,
+  },
+];
+
 test('Game module returns an object', () => {
   expect(typeof game).toBe('object');
 });
@@ -48,7 +87,7 @@ test('gameOver property is true on default', () => {
 });
 
 test('startGame method creates player and gameboard object for each player', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.playerOne.player).not.toBe(null);
   expect(game.playerOne.gameboard).not.toBe(null);
   expect(game.playerTwo.player).not.toBe(null);
@@ -60,27 +99,27 @@ test('startGame method creates player and gameboard object for each player', () 
 });
 
 test('startGame changes gameOver to false', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.gameOver).toBe(false);
 });
 
 test('startGame method initializes playerTwo as an AI', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.playerTwo.player.isAI).toBe(true);
 });
 
 test('startGame changes turn of player one to true', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.playerOne.player.isMyTurn).toBe(true);
 });
 
 test('playerTwo turn is false after calling startGame method', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
 });
 
 test('startGame puts 5 ships on each gameboard', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   let i = 0;
   let j = 0;
   game.playerOne.gameboard.board.forEach((row) => {
@@ -91,25 +130,24 @@ test('startGame puts 5 ships on each gameboard', () => {
     const shipTiles = row.filter((tile) => tile.ship);
     j += shipTiles.length;
   });
-
   expect(i).toBe(17);
   expect(j).toBe(17);
 });
 
 test('playTurn method throws error if no coordinates specified and player is not AI', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(() => game.playTurn()).toThrow();
 });
 
 test('playTurn method doesnt throw error if no coordinates specified and player is AI', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   game.playerOne.player.changeTurn();
   game.playerTwo.player.changeTurn();
   expect(() => game.playTurn()).not.toThrow();
 });
 
 test('playTurn method changes player turn after hitting empty square', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
   game.playTurn({ x: 1, y: 0 });
@@ -118,7 +156,7 @@ test('playTurn method changes player turn after hitting empty square', () => {
 });
 
 test('playTurn method doesnt change player turn after hitting ship', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.playerOne.player.isMyTurn).toBe(true);
   expect(game.playerTwo.player.isMyTurn).toBe(false);
   game.playTurn({ x: 5, y: 5 });
@@ -127,14 +165,14 @@ test('playTurn method doesnt change player turn after hitting ship', () => {
 });
 
 test('playTurn hits the specified coordinates on a correct board', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   expect(game.playerOne.player.isMyTurn).toBe(true);
   game.playTurn({ x: 2, y: 3 });
   expect(game.playerTwo.gameboard.board[3][2].isHit).toBe(true);
 });
 
 test('playTurn hits the correct board when its AI turn', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   game.playerOne.player.changeTurn();
   game.playerTwo.player.changeTurn();
   expect(game.playerTwo.player.isMyTurn).toBe(true);
@@ -149,7 +187,7 @@ test('playTurn hits the correct board when its AI turn', () => {
 });
 
 test('playTurn checks if all ships are hit after the attack and changes gameOver to true', () => {
-  game.startGame();
+  game.startGame(mockPlacementData);
   let shipTiles = [];
   game.playerTwo.gameboard.board.forEach((row) => {
     shipTiles = [...shipTiles, ...row.filter((tile) => tile.ship)];

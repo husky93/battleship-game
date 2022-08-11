@@ -210,6 +210,39 @@ test('placeShip places the ship horizontally inside board array correctly', () =
   });
 });
 
+test('placeShip places ship on correct number of squares', () => {
+  const object = Gameboard();
+  let i = 0;
+  const checkForShipTiles = () => {
+    object.board.forEach((row) => {
+      row.forEach((tile) => {
+        if (tile.ship) {
+          i += 1;
+        }
+      });
+    });
+  };
+  object.placeShip(mockShip(5), { x: 1, y: 3, vertically: true });
+  checkForShipTiles();
+  expect(i).toBe(5);
+  i = 0;
+  object.placeShip(mockShip(3), { x: 6, y: 0, horizontally: true });
+  checkForShipTiles();
+  expect(i).toBe(8);
+  i = 0;
+  object.placeShip(mockShip(3), { x: 5, y: 3, horizontally: true });
+  checkForShipTiles();
+  expect(i).toBe(11);
+  i = 0;
+  object.placeShip(mockShip(4), { x: 7, y: 5, vertically: true });
+  checkForShipTiles();
+  expect(i).toBe(15);
+  i = 0;
+  object.placeShip(mockShip(2), { x: 1, y: 9, horizontally: true });
+  checkForShipTiles();
+  expect(i).toBe(17);
+});
+
 test('placeShip changes isTaken tile prop to true correctly', () => {
   const object = Gameboard();
   object.placeShip(mockShip(4), { x: 1, y: 5, horizontally: true });

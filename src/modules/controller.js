@@ -1,6 +1,7 @@
 import PubSub from 'pubsub-js';
 
 const controller = (() => {
+  let placementData = null;
   const addBtnListeners = (btn, cb) => {
     btn.addEventListener('click', cb);
   };
@@ -35,11 +36,15 @@ const controller = (() => {
 
   const handleShipsPlaced = (msg, data) => {
     const btnStart = document.querySelector('.start');
+    placementData = data;
     btnStart.disabled = false;
-    console.log(data);
   };
 
-  return { handlePlaceRendered, handleShipsPlaced };
+  const handleGameStart = (msg, data, game) => {
+    console.log(placementData);
+  };
+
+  return { handlePlaceRendered, handleShipsPlaced, handleGameStart };
 })();
 
 export default controller;

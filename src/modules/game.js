@@ -15,12 +15,15 @@ const game = (() => {
     gameOver = true;
   };
 
-  const placeShips = () => {
-    playerOne.gameboard.placeShip(Ship(5), { x: 0, y: 0, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(4), { x: 0, y: 2, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(3), { x: 0, y: 4, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(3), { x: 5, y: 4, horizontally: true });
-    playerOne.gameboard.placeShip(Ship(2), { x: 0, y: 6, horizontally: true });
+  const placeShips = (data) => {
+    data.forEach((ship) => {
+      const { length } = ship;
+      const { x } = ship;
+      const { y } = ship;
+      const direction = ship.vertically ? 'vertically' : 'horizontally';
+      const placementOptions = { x, y, [direction]: true };
+      playerOne.gameboard.placeShip(Ship(length), placementOptions);
+    });
     playerTwo.gameboard.placeShip(Ship(5), { x: 1, y: 3, vertically: true });
     playerTwo.gameboard.placeShip(Ship(4), { x: 3, y: 2, vertically: true });
     playerTwo.gameboard.placeShip(Ship(3), { x: 5, y: 5, vertically: true });
@@ -28,7 +31,7 @@ const game = (() => {
     playerTwo.gameboard.placeShip(Ship(2), { x: 9, y: 3, vertically: true });
   };
 
-  const startGame = () => {
+  const startGame = (data) => {
     clearGameState();
     gameOver = false;
     playerOne.player = Player();
@@ -36,7 +39,7 @@ const game = (() => {
     playerOne.gameboard = Gameboard();
     playerTwo.gameboard = Gameboard();
     playerOne.player.changeTurn();
-    placeShips();
+    placeShips(data);
   };
 
   const isGameOver = () => {
