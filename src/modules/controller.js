@@ -41,7 +41,7 @@ const controller = (() => {
   };
 
   const handleGameStart = (msg, data, game) => {
-    console.log(placementData);
+    game.startGame(placementData);
   };
 
   return { handlePlaceRendered, handleShipsPlaced, handleGameStart };

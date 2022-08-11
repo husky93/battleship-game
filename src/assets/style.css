@@ -34,6 +34,10 @@
   border: 1px #afafaf solid;
 }
 
+.tile.tile--ship {
+  background-color: #000;
+}
+
 .ship-tile {
   position:relative;
   width: 40px;

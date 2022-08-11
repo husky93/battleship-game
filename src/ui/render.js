@@ -74,7 +74,9 @@ const render = (() => {
 
   const renderGame = (msg, data, game) => {
     clearMain();
-    const boardOne = createBoard('p1', game.playerOne.gameboard.board);
+    const boardOne = createBoard('p1', game.playerOne.gameboard.board, {
+      showShip: true,
+    });
     const boardTwo = createBoard('p2', game.playerTwo.gameboard.board);
 
     main.append(boardOne, boardTwo);
