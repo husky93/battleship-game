@@ -28,6 +28,12 @@ test('Returned object has isAllShipsSunk method', () => {
   expect(typeof object.isAllShipsSunk).toBe('function');
 });
 
+test('Returned object has placeShipsRandomly method', () => {
+  const object = Gameboard();
+  expect(object.placeShipsRandomly).toBeDefined();
+  expect(typeof object.placeShipsRandomly).toBe('function');
+});
+
 test('Board property is an array', () => {
   const object = Gameboard();
   expect(Array.isArray(object.board)).toBe(true);
@@ -344,4 +350,47 @@ test('isAllShipsSunk returns false if not all ships on the board are sunk', () =
   object.receiveAttack({ x: 9, y: 7 });
 
   expect(object.isAllShipsSunk()).toBe(false);
+});
+
+// placeShipsRandomly
+
+test('placeShipRandomly places 5 ships on the board on the board', () => {
+  const object = Gameboard();
+  let i = 0;
+  object.placeShipsRandomly([Ship(5), Ship(4), Ship(3), Ship(3), Ship(2)]);
+  const checkForShipTiles = () => {
+    object.board.forEach((row) => {
+      row.forEach((tile) => {
+        if (tile.ship) {
+          i += 1;
+        }
+      });
+    });
+  };
+  checkForShipTiles();
+  expect(i).toBe(17);
+});
+
+test('placeShipRandomly places ships with length 5,4,3,3,2 on the board', () => {
+  const object = Gameboard();
+  object.placeShipsRandomly([Ship(5), Ship(4), Ship(3), Ship(3), Ship(2)]);
+  let shipLengthFive = false;
+  let shipLengthFour = false;
+  let shipLengthThree = 0;
+  let shipLengthTwo = false;
+  object.board.forEach((row) => {
+    row.forEach((tile) => {
+      if (tile.ship) {
+        if (tile.ship.length === 5) shipLengthFive = true;
+        if (tile.ship.length === 4) shipLengthFour = true;
+        if (tile.ship.length === 3) shipLengthThree += 1;
+        if (tile.ship.length === 2) shipLengthTwo = true;
+      }
+    });
+  });
+
+  expect(shipLengthFive).toBe(true);
+  expect(shipLengthFour).toBe(true);
+  expect(shipLengthThree).toBe(6);
+  expect(shipLengthTwo).toBe(true);
 });

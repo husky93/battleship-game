@@ -28,8 +28,9 @@ const Gameboard = () => {
     for (let i = 0; i < ship.length; i += 1) {
       const xCoord = options.horizontally ? options.x + i : options.x;
       const yCoord = options.horizontally ? options.y : options.y + i;
-      const nextTile = board[yCoord][xCoord];
-
+      let nextTile = null;
+      if (xCoord <= 9 && xCoord >= 0 && yCoord <= 9 && yCoord >= 0)
+        nextTile = board[yCoord][xCoord];
       if (nextTile && isTileTaken(nextTile.x, nextTile.y)) return false;
     }
     return true;
@@ -146,6 +147,53 @@ const Gameboard = () => {
     return true;
   };
 
+  const clearBoard = () => {
+    board.forEach((row) => {
+      row.forEach((tile) => {
+        const selectedTile = tile;
+        selectedTile.ship = null;
+        selectedTile.index = null;
+        selectedTile.isHit = false;
+        selectedTile.isTaken = false;
+      });
+    });
+  };
+
+  const placeShipsRandomly = (ships) => {
+    clearBoard();
+    const rows = [...board];
+    const tiles = Array.prototype.concat.apply([], rows);
+    ships.every((ship) => {
+      const randomNum = Math.floor(Math.random() * 2);
+      const { length } = ship;
+      const direction = randomNum === 0 ? 'vertically' : 'horizontally';
+      const legalMoves = [];
+      tiles.forEach((tile) => {
+        const { x } = tile;
+        const { y } = tile;
+        const isOutOfBounds =
+          (direction.localeCompare('horizontally') === 0 &&
+            x + length - 1 > 9) ||
+          (direction.localeCompare('vertically') === 0 && y + length - 1 > 9);
+        if (canPlaceShip(ship, { x, y, [direction]: true }) && !isOutOfBounds) {
+          legalMoves.push(tile);
+        }
+      });
+      if (legalMoves.length === 0) {
+        placeShipsRandomly();
+        return false;
+      }
+      const randomIndex = Math.floor(Math.random() * legalMoves.length);
+      const placementTile = legalMoves[randomIndex];
+      placeShip(ship, {
+        x: placementTile.x,
+        y: placementTile.y,
+        [direction]: true,
+      });
+      return true;
+    });
+  };
+
   const isAllShipsSunk = () => {
     for (const row of board) {
       const shipTiles = row.filter((tile) => tile.ship !== null);
@@ -162,6 +210,7 @@ const Gameboard = () => {
     placeShip,
     isAllShipsSunk,
     receiveAttack,
+    placeShipsRandomly,
   };
 };
 
