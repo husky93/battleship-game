@@ -62,14 +62,25 @@ const controller = (() => {
     addSwitchModeListeners(btnVertical, btnHorizontal, object.switchMode);
   };
 
+  const toggleFlipper = (text, add) => {
+    const flipper = document.querySelector('.flipper-card');
+    if (add) flipper.classList.add('flipped');
+    else flipper.classList.remove('flipped');
+    flipper.title = text;
+  };
+
   const handleTurnPlayed = (msg, game) => {
     if (game.playerTwo.player.isMyTurn) {
+      toggleFlipper('Computer turn!', true);
       const promise = new Promise((resolve) => {
         setTimeout(resolve, 500);
       });
       promise.then(() => {
         game.playTurn();
       });
+    }
+    if (game.playerOne.player.isMyTurn) {
+      toggleFlipper('Your turn!');
     }
   };
 

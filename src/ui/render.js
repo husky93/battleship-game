@@ -73,19 +73,20 @@ const render = (() => {
 
   const renderGame = (msg, data, game) => {
     clearMain();
-    const gameWrapper = elementsDOM.createWrapper(['wrapper-game'], 'div');
+    const gameWrapper = elementsDOM.createWrapper(['game-wrapper'], 'div');
+    const flipper = createFlipper();
     const boardOne = createBoard('p1', game.playerOne.gameboard.board, {
       showShip: true,
     });
     const boardTwo = createBoard('p2', game.playerTwo.gameboard.board);
-    gameWrapper.append(boardOne, boardTwo);
+    gameWrapper.append(boardOne, flipper, boardTwo);
     main.appendChild(gameWrapper);
 
     PubSub.publish('GAME RENDERED', game);
   };
 
   const renderGameOver = (msg, game) => {
-    const goWrapper = elementsDOM.createWrapper(['wrapper-go'], 'div');
+    const goWrapper = elementsDOM.createWrapper(['go-wrapper'], 'div');
     const heading = elementsDOM.createHeading(
       ['heading-go'],
       'h2',
