@@ -81,7 +81,22 @@ const render = (() => {
     PubSub.publish('GAME RENDERED', game);
   };
 
-  const renderGameOver = (msg) => {};
+  const renderGameOver = (msg, game) => {
+    const goWrapper = elementsDOM.createWrapper(['wrapper-go'], 'div');
+    const heading = elementsDOM.createHeading(
+      ['heading-go'],
+      'h2',
+      'Game Over'
+    );
+    const uiWrapper = elementsDOM.createWrapper(['game-over-ui'], 'div');
+    const btnStartAgain = elementsDOM.createButton(
+      ['btn', 'btn--primary', 'start-again'],
+      'Restart Game'
+    );
+    uiWrapper.appendChild(btnStartAgain);
+    goWrapper.append(heading, uiWrapper);
+    main.appendChild(goWrapper);
+  };
 
   return { renderPlace, renderGame, renderGameOver };
 })();
