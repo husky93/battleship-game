@@ -3,17 +3,12 @@ import elementsDOM from './elementsDOM';
 
 const dragdrop = (() => {
   const dragContainer = elementsDOM.createWrapper(['container', 'drag'], 'div');
-  const carrier = elementsDOM.createDraggableShip(5);
-  const battleship = elementsDOM.createDraggableShip(4);
-  const destroyer = elementsDOM.createDraggableShip(3);
-  const submarine = elementsDOM.createDraggableShip(3);
-  const patrol = elementsDOM.createDraggableShip(2);
   let dragSrcEl;
   let mode = 'horizontal';
   let draggingWidth = null;
   let dropped = false;
 
-  const shipsArray = [carrier, battleship, destroyer, submarine, patrol];
+  let shipsArray = [];
 
   const toggleActiveHorizontal = (x, y, width, toggle) => {
     for (let i = 0; i < width; i += 1) {
@@ -314,6 +309,12 @@ const dragdrop = (() => {
   };
 
   const createDragDrop = (board) => {
+    const carrier = elementsDOM.createDraggableShip(5);
+    const battleship = elementsDOM.createDraggableShip(4);
+    const destroyer = elementsDOM.createDraggableShip(3);
+    const submarine = elementsDOM.createDraggableShip(3);
+    const patrol = elementsDOM.createDraggableShip(2);
+    shipsArray = [carrier, battleship, destroyer, submarine, patrol];
     addDragEventListeners(board);
     shipsArray.forEach((ship) => {
       if (ship.classList.contains('vertical'))

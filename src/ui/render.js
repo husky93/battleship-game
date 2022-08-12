@@ -21,6 +21,7 @@ const render = (() => {
     const header = createHeader();
     const boardWrapper = elementsDOM.createWrapper(['place-wrapper'], 'div');
     const boardPlace = createBoard('place', placeGameboard.board);
+    const dragWrapper = elementsDOM.createWrapper(['drag-wrapper'], 'div');
     const dragDrop = dragdrop.createDragDrop(boardPlace);
     const uiWrapper = elementsDOM.createWrapper(['place-ui'], 'div');
     const orientationToggler = elementsDOM.createWrapper(
@@ -62,8 +63,9 @@ const render = (() => {
     );
     btnHorizontal.classList.toggle('active');
     orientationToggler.append(btnHorizontal, btnVertical);
-    uiWrapper.append(orientationToggler, btnReset, btnRandom, btnStart);
-    boardWrapper.append(dragDrop, boardPlace);
+    uiWrapper.append(btnReset, btnRandom, btnStart);
+    dragWrapper.append(dragDrop, orientationToggler);
+    boardWrapper.append(dragWrapper, boardPlace);
     main.append(header, boardWrapper, uiWrapper);
     PubSub.publish('PLACE RENDERED', {
       container: uiWrapper,

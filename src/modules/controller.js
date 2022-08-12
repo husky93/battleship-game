@@ -52,9 +52,9 @@ const controller = (() => {
     const wrapper = object.container;
     const btnReset = wrapper.querySelector('.reset');
     const btnRandom = wrapper.querySelector('.random');
-    const btnHorizontal = wrapper.querySelector('.btn-horizontal');
-    const btnVertical = wrapper.querySelector('.btn-vertical');
-    const btnStart = document.querySelector('.start');
+    const btnHorizontal = document.querySelector('.btn-horizontal');
+    const btnVertical = document.querySelector('.btn-vertical');
+    const btnStart = wrapper.querySelector('.start');
     addStartListeners(btnStart);
     addBtnListeners(btnReset, object.reset);
     addBtnListeners(btnRandom, object.placeRandomly);
