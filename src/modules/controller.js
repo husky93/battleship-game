@@ -64,7 +64,12 @@ const controller = (() => {
 
   const handleTurnPlayed = (msg, game) => {
     if (game.playerTwo.player.isMyTurn) {
-      game.playTurn();
+      const promise = new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      });
+      promise.then(() => {
+        game.playTurn();
+      });
     }
   };
 

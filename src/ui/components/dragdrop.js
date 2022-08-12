@@ -298,6 +298,10 @@ const dragdrop = (() => {
 
   const createDragDrop = (board) => {
     addDragEventListeners(board);
+    shipsArray.forEach((ship) => {
+      if (ship.classList.contains('vertical'))
+        ship.classList.remove('vertical');
+    });
     dragContainer.append(carrier, battleship, destroyer, submarine, patrol);
     return dragContainer;
   };
