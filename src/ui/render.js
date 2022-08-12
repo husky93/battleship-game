@@ -1,5 +1,6 @@
 import PubSub from 'pubsub-js';
 import createBoard from './components/board';
+import createFlipper from './components/flipper';
 import dragdrop from './components/dragdrop';
 import Gameboard from '../modules/gameboard';
 import elementsDOM from './components/elementsDOM';
@@ -72,11 +73,13 @@ const render = (() => {
 
   const renderGame = (msg, data, game) => {
     clearMain();
+    const gameWrapper = elementsDOM.createWrapper(['wrapper-game'], 'div');
     const boardOne = createBoard('p1', game.playerOne.gameboard.board, {
       showShip: true,
     });
     const boardTwo = createBoard('p2', game.playerTwo.gameboard.board);
-    main.append(boardOne, boardTwo);
+    gameWrapper.append(boardOne, boardTwo);
+    main.appendChild(gameWrapper);
 
     PubSub.publish('GAME RENDERED', game);
   };
