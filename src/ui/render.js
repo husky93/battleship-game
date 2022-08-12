@@ -74,18 +74,21 @@ const render = (() => {
   const renderGame = (msg, data, game) => {
     clearMain();
     const gameWrapper = elementsDOM.createWrapper(['game-wrapper'], 'div');
+    const midWrapper = elementsDOM.createWrapper(['mid-wrapper'], 'div');
     const flipper = createFlipper();
     const boardOne = createBoard('p1', game.playerOne.gameboard.board, {
       showShip: true,
     });
     const boardTwo = createBoard('p2', game.playerTwo.gameboard.board);
-    gameWrapper.append(boardOne, flipper, boardTwo);
+    midWrapper.appendChild(flipper);
+    gameWrapper.append(boardOne, midWrapper, boardTwo);
     main.appendChild(gameWrapper);
 
     PubSub.publish('GAME RENDERED', game);
   };
 
   const renderGameOver = (msg, game) => {
+    const midWrapper = document.querySelector('.mid-wrapper');
     const goWrapper = elementsDOM.createWrapper(['go-wrapper'], 'div');
     const heading = elementsDOM.createHeading(
       ['heading-go'],
@@ -103,7 +106,7 @@ const render = (() => {
     );
     uiWrapper.appendChild(btnStartAgain);
     goWrapper.append(heading, para, uiWrapper);
-    main.appendChild(goWrapper);
+    midWrapper.appendChild(goWrapper);
 
     PubSub.publish('GAME OVER RENDERED', btnStartAgain);
   };

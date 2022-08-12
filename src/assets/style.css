@@ -7,11 +7,24 @@
 
 * {
   box-sizing: border-box;
+  font-size: 14px;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive;
+}
+
+.btn {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  padding: 12px 24px;
 }
 
 .main {
   display: flex;
   flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .gameboard, .row, .tile, .ship-tile {
@@ -83,10 +96,38 @@
 
 .game-wrapper {
   display: flex;
+  justify-content: center;
 }
 
 .place-wrapper {
   display: flex;
+  justify-content: center;
+}
+
+/* Game mid */
+
+.mid-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 48px;
+}
+
+.go-wrapper {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.heading-go {
+  font-size: 18px;
+}
+
+.text-go {
+  font-size: 13px;
 }
 
 /* Flipper */
@@ -114,6 +155,7 @@
   justify-content: center;
   align-items: center;
   margin: 0;
+  text-align: center;
   width: var(--flipper-width);
   height: var(--flipper-height);
   position: absolute;
