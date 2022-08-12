@@ -16,6 +16,11 @@ const dragdrop = (() => {
   const shipsArray = [carrier, battleship, destroyer, submarine, patrol];
 
   const toggleActiveHorizontal = (x, y, width, toggle) => {
+    for (let i = 0; i < width; i += 1) {
+      const tile = document.querySelector(`[data-x='${x + i}'][data-y='${y}']`);
+      if (tile && toggle.add) tile.classList.add('ship-tile');
+      if (tile && toggle.remove) tile.classList.remove('ship-tile');
+    }
     for (let i = -1; i < width + 1; i += 1) {
       const tile = document.querySelector(`[data-x='${x + i}'][data-y='${y}']`);
       if (tile && toggle.add) tile.classList.add('active');
@@ -38,6 +43,11 @@ const dragdrop = (() => {
   };
 
   const toggleActiveVertical = (x, y, width, toggle) => {
+    for (let i = 0; i < width; i += 1) {
+      const tile = document.querySelector(`[data-x='${x}'][data-y='${y + i}']`);
+      if (tile && toggle.add) tile.classList.add('ship-tile');
+      if (tile && toggle.remove) tile.classList.remove('ship-tile');
+    }
     for (let i = -1; i < width + 1; i += 1) {
       const tile = document.querySelector(`[data-x='${x}'][data-y='${y + i}']`);
       if (tile && toggle.add) tile.classList.add('active');
@@ -101,6 +111,7 @@ const dragdrop = (() => {
     });
     tiles.forEach((tile) => {
       tile.classList.remove('active');
+      tile.classList.remove('ship-tile');
     });
     mode = 'horizontal';
     startBtn.disabled = true;

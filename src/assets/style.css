@@ -24,6 +24,8 @@
 }
 
 body {
+  background-color: #000811;
+  color: #fff;
   font-family: 'PlaymegamesReguler';
 }
 
@@ -36,9 +38,21 @@ body {
 .main {
   display: flex;
   flex-direction: column;
-  padding: 84px 0;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  font-family: 'Rectaxel';
+  font-size: 32px;
+  margin-bottom: 36px;
+}
+
+.place-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
 }
 
 .gameboard, .row, .tile, .ship-tile {
@@ -55,6 +69,9 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  border-style: solid;
+  border-width: 2px 3px 3px 2px;
+  border-color: #004244;
 }
 
 .row {
@@ -65,7 +82,9 @@ body {
   z-index: 1;
   width: 40px;
   height: 40px;
-  border: 1px #afafaf solid;
+  border-left: 1px #004244 solid;
+  border-top: 1px #004244 solid;
+  background-color: #002044
 }
 
 .tile.tile--ship {
@@ -85,7 +104,8 @@ body {
   width: 40px;
   height: 40px;
   background-color: black;
-  border: 1px #afafaf solid;
+  border-left: 1px #afafaf solid;
+  border-top: 1px #afafaf solid;
   z-index: 20;
 }
 
@@ -93,6 +113,8 @@ body {
   display: flex;
   transition: opacity 0.1s ease-out;
   width: min-content;
+  border-right: 1px #afafaf solid;
+  border-bottom: 1px #afafaf solid;
 }
 
 .ship.vertical {
@@ -111,11 +133,7 @@ body {
 .game-wrapper {
   display: flex;
   justify-content: center;
-}
-
-.place-wrapper {
-  display: flex;
-  justify-content: center;
+  padding: 84px 0;
 }
 
 /* Game mid */

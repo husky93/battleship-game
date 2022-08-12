@@ -1,6 +1,7 @@
 import PubSub from 'pubsub-js';
 import createBoard from './components/board';
 import createFlipper from './components/flipper';
+import createHeader from './components/header';
 import dragdrop from './components/dragdrop';
 import Gameboard from '../modules/gameboard';
 import elementsDOM from './components/elementsDOM';
@@ -17,6 +18,7 @@ const render = (() => {
   const renderPlace = () => {
     clearMain();
     const placeGameboard = Gameboard();
+    const header = createHeader();
     const boardWrapper = elementsDOM.createWrapper(['place-wrapper'], 'div');
     const boardPlace = createBoard('place', placeGameboard.board);
     const dragDrop = dragdrop.createDragDrop(boardPlace);
@@ -62,7 +64,7 @@ const render = (() => {
     orientationToggler.append(btnHorizontal, btnVertical);
     uiWrapper.append(orientationToggler, btnReset, btnRandom, btnStart);
     boardWrapper.append(dragDrop, boardPlace);
-    main.append(boardWrapper, uiWrapper);
+    main.append(header, boardWrapper, uiWrapper);
     PubSub.publish('PLACE RENDERED', {
       container: uiWrapper,
       reset: dragdrop.reset,
