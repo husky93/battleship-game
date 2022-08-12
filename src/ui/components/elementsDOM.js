@@ -66,6 +66,7 @@ const elementsDOM = (() => {
     createButton,
     createDraggableShip,
     createHeading,
+    createParagraph,
   };
 })();
 

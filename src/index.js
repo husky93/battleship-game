@@ -17,6 +17,7 @@ PubSub.subscribe('TURN PLAYED', controller.handleTurnPlayed);
 PubSub.subscribe('AI MOVE PLAYED', controller.handleAITurnPlayed);
 PubSub.subscribe('GAME OVER', controller.handleGameOver);
 PubSub.subscribe('GAME OVER', render.renderGameOver);
+PubSub.subscribe('GAME OVER RENDERED', controller.handleGameOverRender);
 // game.startGame();
 // render.renderGame(game);
 render.renderPlace();

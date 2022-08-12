@@ -20,6 +20,10 @@ const controller = (() => {
     });
   };
 
+  const handleStartAgain = () => {
+    PubSub.publish('START NEW GAME');
+  };
+
   const handleTileClick = (e) => {
     const { game } = e.currentTarget;
     const x = parseInt(e.target.dataset.x, 10);
@@ -96,6 +100,10 @@ const controller = (() => {
     console.log('game over');
   };
 
+  const handleGameOverRender = (msg, btn) => {
+    btn.addEventListener('click', handleStartAgain);
+  };
+
   return {
     handlePlaceRendered,
     handleGameRendered,
@@ -104,6 +112,7 @@ const controller = (() => {
     handleTurnPlayed,
     handleAITurnPlayed,
     handleGameOver,
+    handleGameOverRender,
   };
 })();
 

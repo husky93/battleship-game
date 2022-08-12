@@ -88,14 +88,20 @@ const render = (() => {
       'h2',
       'Game Over'
     );
+    const paraText = game.playerOne.gameboard.isAllShipsSunk()
+      ? 'Computer wins'
+      : 'You win';
+    const para = elementsDOM.createParagraph(['text-go'], paraText);
     const uiWrapper = elementsDOM.createWrapper(['game-over-ui'], 'div');
     const btnStartAgain = elementsDOM.createButton(
       ['btn', 'btn--primary', 'start-again'],
       'Restart Game'
     );
     uiWrapper.appendChild(btnStartAgain);
-    goWrapper.append(heading, uiWrapper);
+    goWrapper.append(heading, para, uiWrapper);
     main.appendChild(goWrapper);
+
+    PubSub.publish('GAME OVER RENDERED', btnStartAgain);
   };
 
   return { renderPlace, renderGame, renderGameOver };
