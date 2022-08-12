@@ -40,6 +40,13 @@ const elementsDOM = (() => {
     return heading;
   };
 
+  const createParagraph = ([...classList], text) => {
+    const para = document.createElement('p');
+    classList.forEach((item) => para.classList.add(item));
+    para.textContent = text;
+    return para;
+  };
+
   const createDraggableShip = (width, vertical) => {
     const ship = createWrapper(['ship', 'draggable'], 'div');
     if (vertical) ship.classList.add('vertical');
