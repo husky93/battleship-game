@@ -13,8 +13,6 @@ const render = (() => {
     }
   };
 
-  const renderStart = () => {};
-
   const renderPlace = () => {
     clearMain();
     const placeGameboard = Gameboard();
@@ -83,7 +81,9 @@ const render = (() => {
     PubSub.publish('GAME RENDERED', game);
   };
 
-  return { renderStart, renderPlace, renderGame };
+  const renderGameOver = (msg) => {};
+
+  return { renderPlace, renderGame, renderGameOver };
 })();
 
 export default render;

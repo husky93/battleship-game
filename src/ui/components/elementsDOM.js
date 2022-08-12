@@ -33,6 +33,13 @@ const elementsDOM = (() => {
     return button;
   };
 
+  const createHeading = ([...classList], headingTag, text) => {
+    const heading = document.createElement(`${headingTag}`);
+    classList.forEach((item) => heading.classList.add(item));
+    heading.textContent = text;
+    return heading;
+  };
+
   const createDraggableShip = (width, vertical) => {
     const ship = createWrapper(['ship', 'draggable'], 'div');
     if (vertical) ship.classList.add('vertical');
@@ -51,6 +58,7 @@ const elementsDOM = (() => {
     createBoardTile,
     createButton,
     createDraggableShip,
+    createHeading,
   };
 })();
 
