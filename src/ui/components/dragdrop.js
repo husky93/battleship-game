@@ -18,8 +18,8 @@ const dragdrop = (() => {
   const toggleActiveHorizontal = (x, y, width, toggle) => {
     for (let i = 0; i < width; i += 1) {
       const tile = document.querySelector(`[data-x='${x + i}'][data-y='${y}']`);
-      if (tile && toggle.add) tile.classList.add('ship-tile');
-      if (tile && toggle.remove) tile.classList.remove('ship-tile');
+      if (tile && toggle.add) tile.classList.add('has-ship');
+      if (tile && toggle.remove) tile.classList.remove('has-ship');
     }
     for (let i = -1; i < width + 1; i += 1) {
       const tile = document.querySelector(`[data-x='${x + i}'][data-y='${y}']`);
@@ -45,8 +45,8 @@ const dragdrop = (() => {
   const toggleActiveVertical = (x, y, width, toggle) => {
     for (let i = 0; i < width; i += 1) {
       const tile = document.querySelector(`[data-x='${x}'][data-y='${y + i}']`);
-      if (tile && toggle.add) tile.classList.add('ship-tile');
-      if (tile && toggle.remove) tile.classList.remove('ship-tile');
+      if (tile && toggle.add) tile.classList.add('has-ship');
+      if (tile && toggle.remove) tile.classList.remove('has-ship');
     }
     for (let i = -1; i < width + 1; i += 1) {
       const tile = document.querySelector(`[data-x='${x}'][data-y='${y + i}']`);
@@ -93,10 +93,15 @@ const dragdrop = (() => {
   const switchMode = (string) => {
     mode = string;
     const ships = dragContainer.childNodes;
-    if (string === 'vertical')
+    if (string === 'vertical') {
       ships.forEach((ship) => ship.classList.add('vertical'));
-    if (string === 'horizontal')
+      dragContainer.classList.add('drag--vertical');
+    }
+
+    if (string === 'horizontal') {
       ships.forEach((ship) => ship.classList.remove('vertical'));
+      dragContainer.classList.remove('drag--vertical');
+    }
   };
 
   const reset = () => {
@@ -108,10 +113,11 @@ const dragdrop = (() => {
       dragContainer.appendChild(ship);
       if (ship.classList.contains('vertical'))
         ship.classList.remove('vertical');
+      dragContainer.classList.remove('drag--vertical');
     });
     tiles.forEach((tile) => {
       tile.classList.remove('active');
-      tile.classList.remove('ship-tile');
+      tile.classList.remove('has-ship');
     });
     mode = 'horizontal';
     startBtn.disabled = true;

@@ -13,6 +13,11 @@
 }
 
 :root {
+  --primary: #4C5C67;
+  --primary-light: #84A0B3;
+  --primary-dark: #262E33;
+  --grey-light: #c8d0e7;
+  --white: #fff;
   --flipper-height: 50px;
   --flipper-width: 160px;
   --flipper-spacing: 15px;
@@ -24,7 +29,9 @@
 }
 
 body {
-  background-color: #000811;
+  margin: 0;
+  background: linear-gradient(0deg,#000811 0%, #001833 100%);
+  min-height: 100vh;
   color: #fff;
   font-family: 'PlaymegamesReguler';
 }
@@ -55,6 +62,21 @@ body {
   gap: 64px;
 }
 
+.drag {
+  background-color: rgba(0, 8, 17, 0.7);
+  padding: 24px;
+  border-radius: 14px;
+  min-width: 225px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drag.drag--vertical {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 .gameboard, .row, .tile, .ship-tile {
   user-drag: none;
   -webkit-user-drag: none;
@@ -71,7 +93,7 @@ body {
   flex-direction: column;
   border-style: solid;
   border-width: 2px 3px 3px 2px;
-  border-color: #004244;
+  border-color: var(--primary-light);
 }
 
 .row {
@@ -79,12 +101,12 @@ body {
 }
 
 .tile {
+  background-color: #002044;
   z-index: 1;
   width: 40px;
   height: 40px;
-  border-left: 1px #004244 solid;
-  border-top: 1px #004244 solid;
-  background-color: #002044
+  border-left: 1px var(--primary-light) solid;
+  border-top: 1px var(--primary-light) solid;
 }
 
 .tile.tile--ship {
@@ -103,18 +125,28 @@ body {
   position:relative;
   width: 40px;
   height: 40px;
-  background-color: black;
-  border-left: 1px #afafaf solid;
-  border-top: 1px #afafaf solid;
+  background-color: var(--primary);
+  box-shadow: inset 2px 2px 7px var(--primary-light),
+              inset -2px -2px 7px var(--primary-dark);
+  border-left: 1px var(--primary-light) solid;
+  border-top: 1px var(--primary-light) solid;
   z-index: 20;
+}
+
+.has-ship {
+  background-color: var(--primary);
+  box-shadow: inset 2px 2px 7px var(--primary-light),
+              inset -2px -2px 7px var(--primary-dark);
+              border-left: 1px var(--primary-light) solid;
+              border-top: 1px var(--primary-light) solid;
 }
 
 .ship {
   display: flex;
   transition: opacity 0.1s ease-out;
   width: min-content;
-  border-right: 1px #afafaf solid;
-  border-bottom: 1px #afafaf solid;
+  border-right: 1px var(--primary-light) solid;
+  border-bottom: 1px var(--primary-light) solid;
 }
 
 .ship.vertical {
