@@ -46,14 +46,13 @@ body::before {
   height:100%;
   background-image: url(water.jpg);
   background-size: cover;
-  filter:grayscale(100%);
 }
 
 .content {
   position: relative;
   min-height: 100vh;
   background: rgb(17,18,20);
-  background: linear-gradient(0deg, rgba(17,18,20,0.95) 0%, rgba(25,28,31,0.95) 100%);
+  background: linear-gradient(0deg, rgba(17,18,20,1) 0%, rgba(25,28,31,0.96) 100%);
 }
 
 .btn {
@@ -63,7 +62,6 @@ body::before {
 }
 
 .btn-toggle-left {
-
 }
 
 .btn-toggle-right {
@@ -100,8 +98,10 @@ body::before {
 
 .drag {
   background-color: rgba(59, 58, 82, 0.33);
-  padding: 24px;
-  border-radius: 14px;
+  -webkit-box-shadow: 2px 2px 3px 0px rgba(12, 22, 27, 1);
+  -moz-box-shadow: 2px 2px 3px 0px rgba(12, 22, 27, 1);
+  box-shadow: 2px 2px 3px 0px rgba(12, 22, 27, 1);
+  padding: 28px;
   min-width: 225px;
   display: flex;
   flex-direction: column;
@@ -112,6 +112,10 @@ body::before {
 .drag.drag--vertical {
   flex-direction: row;
   align-items: flex-start;
+}
+
+.drag-info {
+  font-size: 14px;
 }
 
 .place-ui {
@@ -168,6 +172,17 @@ body::before {
   background-color: red;
 }
 
+.tile .ship.draggable .ship-tile:nth-child(1)::after {
+  content: "✋";
+  color: var(--primary-light);
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 18px;
+}
+
 .ship-tile {
   position:relative;
   width: 40px;
@@ -206,7 +221,7 @@ body::before {
 }
 
 .tile.over {
-  border: 3px dotted #666;
+  border: 2px dotted var(--primary-light);
 }
 
 .game-wrapper {
