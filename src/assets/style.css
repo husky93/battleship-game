@@ -52,7 +52,7 @@ body::before {
   position: relative;
   min-height: 100vh;
   background: rgb(17,18,20);
-  background: linear-gradient(0deg, rgba(17,18,20,1) 0%, rgba(25,28,31,0.96) 100%);
+  background: linear-gradient(0deg, rgba(17,18,20,0.97) 0%, rgba(25,28,31,0.97) 100%);
 }
 
 .btn {
@@ -89,6 +89,10 @@ body::before {
   gap: 64px;
 }
 
+.place-wrapper .gameboard {
+  align-self: flex-start;
+}
+
 .drag-wrapper {
   display: flex;
   flex-direction: column;
@@ -115,7 +119,8 @@ body::before {
 }
 
 .drag-info {
-  font-size: 14px;
+  margin: 0;
+  font-size: 30px;
 }
 
 .place-ui {

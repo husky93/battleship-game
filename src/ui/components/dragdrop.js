@@ -315,6 +315,8 @@ const dragdrop = (() => {
     const submarine = elementsDOM.createDraggableShip(3);
     const patrol = elementsDOM.createDraggableShip(2);
     shipsArray = [carrier, battleship, destroyer, submarine, patrol];
+    if (dragContainer.classList.contains('drag--vertical'))
+      dragContainer.classList.remove('drag--vertical');
     addDragEventListeners(board);
     shipsArray.forEach((ship) => {
       if (ship.classList.contains('vertical'))
