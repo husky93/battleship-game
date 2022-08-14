@@ -46,6 +46,7 @@ const Player = (options = {}) => {
       hitTilesAI.forEach((tile) => {
         if (tile.ship) {
           const tiles = getAdjacentTiles(tile, gameboard);
+
           tiles.forEach((item) => {
             if (item !== null && item.tile.isHit && item.tile.ship) {
               const { direction } = item;
