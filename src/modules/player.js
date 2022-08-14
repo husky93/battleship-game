@@ -7,6 +7,26 @@ const Player = (options = {}) => {
     isMyTurn = !isMyTurn;
   }
 
+  const getAdjacentTiles = (tile, gameboard) => {
+    const { x } = tile;
+    const { y } = tile;
+    const tileUp =
+      y - 1 >= 0 ? { tile: gameboard.board[y - 1][x], direction: 'up' } : null;
+    const tileRight =
+      x + 1 <= 9
+        ? { tile: gameboard.board[y][x + 1], direction: 'right' }
+        : null;
+    const tileDown =
+      y + 1 <= 9
+        ? { tile: gameboard.board[y + 1][x], direction: 'down' }
+        : null;
+    const tileLeft =
+      x - 1 >= 0
+        ? { tile: gameboard.board[y][x - 1], direction: 'left' }
+        : null;
+    return [tileUp, tileRight, tileDown, tileLeft];
+  };
+
   function playMoveAI(gameboard) {
     if (
       gameboard === undefined ||
@@ -25,25 +45,7 @@ const Player = (options = {}) => {
       });
       hitTilesAI.forEach((tile) => {
         if (tile.ship) {
-          const { x } = tile;
-          const { y } = tile;
-          const tileUp =
-            y - 1 >= 0
-              ? { tile: gameboard.board[y - 1][x], direction: 'up' }
-              : null;
-          const tileRight =
-            x + 1 <= 9
-              ? { tile: gameboard.board[y][x + 1], direction: 'right' }
-              : null;
-          const tileDown =
-            y + 1 <= 9
-              ? { tile: gameboard.board[y + 1][x], direction: 'down' }
-              : null;
-          const tileLeft =
-            x - 1 >= 0
-              ? { tile: gameboard.board[y][x - 1], direction: 'left' }
-              : null;
-          const tiles = [tileUp, tileRight, tileDown, tileLeft];
+          const tiles = getAdjacentTiles(tile, gameboard);
           tiles.forEach((item) => {
             if (item !== null && item.tile.isHit && item.tile.ship) {
               const { direction } = item;
@@ -111,25 +113,7 @@ const Player = (options = {}) => {
       }
       hitTilesAI.forEach((tile) => {
         if (tile.ship) {
-          const { x } = tile;
-          const { y } = tile;
-          const tileUp =
-            y - 1 >= 0
-              ? { tile: gameboard.board[y - 1][x], direction: 'up' }
-              : null;
-          const tileRight =
-            x + 1 <= 9
-              ? { tile: gameboard.board[y][x + 1], direction: 'right' }
-              : null;
-          const tileDown =
-            y + 1 <= 9
-              ? { tile: gameboard.board[y + 1][x], direction: 'down' }
-              : null;
-          const tileLeft =
-            x - 1 >= 0
-              ? { tile: gameboard.board[y][x - 1], direction: 'left' }
-              : null;
-          const tiles = [tileUp, tileRight, tileDown, tileLeft];
+          const tiles = getAdjacentTiles(tile, gameboard);
           let randomTile = null;
           tiles.forEach((item) => {
             if (item !== null && !item.tile.isHit) {
