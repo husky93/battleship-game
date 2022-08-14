@@ -105,6 +105,25 @@ const controller = (() => {
     btnStart.disabled = false;
   };
 
+  const handleShipSunk = (msg, object) => {
+    const { game } = object;
+    const { coords } = object;
+    coords.forEach((item) => {
+      if (game.playerOne.player.isMyTurn) {
+        const tileNode = document.querySelector(
+          `.gameboard--p2 .tile[data-x="${item.x}"][data-y="${item.y}"]`
+        );
+        tileNode.classList.add('tile--hit');
+      }
+      if (game.playerTwo.player.isMyTurn) {
+        const tileNode = document.querySelector(
+          `.gameboard--p1 .tile[data-x="${item.x}"][data-y="${item.y}"]`
+        );
+        tileNode.classList.add('tile--hit');
+      }
+    });
+  };
+
   const handleGameStart = (msg, data, game) => {
     game.startGame(placementData);
   };
@@ -129,6 +148,7 @@ const controller = (() => {
     handleAITurnPlayed,
     handleGameOver,
     handleGameOverRender,
+    handleShipSunk,
   };
 })();
 

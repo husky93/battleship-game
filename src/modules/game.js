@@ -56,6 +56,7 @@ const game = (() => {
     const { index } = tile;
     const { ship } = tile;
     const { length } = ship;
+    const coords = [];
     if (orientation.localeCompare('horizontally') === 0) {
       const firstTile =
         index === 0 ? tile : gameboard.board[tile.y][tile.x - index];
@@ -67,17 +68,25 @@ const game = (() => {
           x + i >= 0 &&
           x + i <= 9 &&
           !gameboard.board[y - 1][x + i].isHit
-        )
+        ) {
           gameboard.receiveAttack({ x: x + i, y: y - 1 });
-        if (x + i >= 0 && x + i <= 9 && !gameboard.board[y][x + i].isHit)
+          coords.push({ x: x + i, y: y - 1 });
+        }
+
+        if (x + i >= 0 && x + i <= 9 && !gameboard.board[y][x + i].isHit) {
           gameboard.receiveAttack({ x: x + i, y });
+          coords.push({ x: x + i, y });
+        }
+
         if (
           y + 1 <= 9 &&
           x + i >= 0 &&
           x + i <= 9 &&
           !gameboard.board[y + 1][x + i].isHit
-        )
+        ) {
           gameboard.receiveAttack({ x: x + i, y: y + 1 });
+          coords.push({ x: x + i, y: y + 1 });
+        }
       }
     }
     if (orientation.localeCompare('vertically') === 0) {
@@ -91,19 +100,28 @@ const game = (() => {
           y + i >= 0 &&
           y + i <= 9 &&
           !gameboard.board[y + i][x - 1].isHit
-        )
+        ) {
           gameboard.receiveAttack({ x: x - 1, y: y + i });
-        if (y + i >= 0 && y + i <= 9 && !gameboard.board[y + i][x].isHit)
+          coords.push({ x: x - 1, y: y + i });
+        }
+
+        if (y + i >= 0 && y + i <= 9 && !gameboard.board[y + i][x].isHit) {
           gameboard.receiveAttack({ x, y: y + i });
+          coords.push({ x, y: y + i });
+        }
+
         if (
           x + 1 <= 9 &&
           y + i >= 0 &&
           y + i <= 9 &&
           !gameboard.board[y + i][x + 1].isHit
-        )
+        ) {
           gameboard.receiveAttack({ x: x + 1, y: y + i });
+          coords.push({ x: x + 1, y: y + i });
+        }
       }
     }
+    PubSub.publish('SHIP SUNK', { game, coords });
   };
 
   const playTurn = (coordinates = {}) => {
