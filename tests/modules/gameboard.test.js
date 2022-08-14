@@ -51,12 +51,13 @@ test('Board property contains 10 arrays and each of those arrays contains 10 obj
   });
 });
 
-test('Every tile object has a ship, index, isHit, x, y, isTaken properties', () => {
+test('Every tile object has a ship, index,, orientation, isHit, x, y, isTaken properties', () => {
   const object = Gameboard();
   object.board.forEach((item) => {
     item.forEach((tile) => {
       expect(tile.ship).toBeDefined();
       expect(tile.index).toBeDefined();
+      expect(tile.orientation).toBeDefined();
       expect(tile.isHit).toBeDefined();
       expect(tile.isTaken).toBeDefined();
       expect(tile.x).toBeDefined();

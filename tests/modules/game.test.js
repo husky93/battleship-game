@@ -228,3 +228,91 @@ test('playTurn checks if all ships are hit after the attack and changes gameOver
   expect(game.playerTwo.gameboard.isAllShipsSunk()).toBe(true);
   expect(game.gameOver).toBe(true);
 });
+
+test('playTurn hits all adjacent tiles if ship is sunk after hit', () => {
+  game.startGame(mockPlacementData);
+  let firstShipTile = null;
+  game.playerTwo.gameboard.board[0].every((tile) => {
+    if (tile.ship) {
+      firstShipTile = tile;
+      return false;
+    }
+    return true;
+  });
+  const { orientation } = firstShipTile;
+  const { length } = firstShipTile.ship;
+  expect(game.playerOne.player.isMyTurn).toBe(true);
+  for (let i = 0; i < length; i += 1) {
+    expect(game.playerOne.player.isMyTurn).toBe(true);
+    if (orientation.localeCompare('horizontally') === 0) {
+      game.playTurn({ x: firstShipTile.x + i, y: firstShipTile.y });
+    }
+    if (orientation.localeCompare('vertically') === 0) {
+      game.playTurn({ x: firstShipTile.x, y: firstShipTile.y + i });
+    }
+  }
+  const { ship } = firstShipTile;
+  expect(ship.isSunk()).toBe(true);
+
+  for (let i = -1; i < length + 1; i += 1) {
+    if (orientation.localeCompare('horizontally') === 0) {
+      if (
+        firstShipTile.y - 1 >= 0 &&
+        firstShipTile.x + i <= 9 &&
+        firstShipTile.x + i >= 0
+      ) {
+        expect(
+          game.playerTwo.gameboard.board[firstShipTile.y - 1][
+            firstShipTile.x + i
+          ].isHit
+        ).toBe(true);
+      }
+      if (firstShipTile.x + i <= 9 && firstShipTile.x + i >= 0) {
+        expect(
+          game.playerTwo.gameboard.board[firstShipTile.y][firstShipTile.x + i]
+            .isHit
+        ).toBe(true);
+      }
+      if (
+        firstShipTile.y + 1 <= 9 &&
+        firstShipTile.x + i <= 9 &&
+        firstShipTile.x + i >= 0
+      )
+        expect(
+          game.playerTwo.gameboard.board[firstShipTile.y + 1][
+            firstShipTile.x + i
+          ].isHit
+        ).toBe(true);
+    }
+    if (orientation.localeCompare('vertically') === 0) {
+      if (
+        firstShipTile.x - 1 >= 0 &&
+        firstShipTile.y + i <= 9 &&
+        firstShipTile.y + i >= 0
+      ) {
+        expect(
+          game.playerTwo.gameboard.board[firstShipTile.y + i][
+            firstShipTile.x - 1
+          ].isHit
+        ).toBe(true);
+      }
+      if (firstShipTile.y + i <= 9 && firstShipTile.y + i >= 0) {
+        expect(
+          game.playerTwo.gameboard.board[firstShipTile.y + i][firstShipTile.x]
+            .isHit
+        ).toBe(true);
+      }
+      if (
+        firstShipTile.x + 1 <= 9 &&
+        firstShipTile.y + i <= 9 &&
+        firstShipTile.y + i >= 0
+      ) {
+        expect(
+          game.playerTwo.gameboard.board[firstShipTile.y + i][
+            firstShipTile.x + 1
+          ].isHit
+        ).toBe(true);
+      }
+    }
+  }
+});

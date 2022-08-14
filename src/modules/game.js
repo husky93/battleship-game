@@ -51,6 +51,11 @@ const game = (() => {
     return boardOneOver || boardTwoOver;
   };
 
+  const hitAdjacentTiles = (tile) => {
+    const { x } = tile;
+    const { y } = tile;
+  };
+
   const playTurn = (coordinates = {}) => {
     if (
       playerOne.player.isMyTurn &&
@@ -77,6 +82,9 @@ const game = (() => {
       PubSub.publish('GAME OVER', game);
       gameOver = true;
       return true;
+    }
+    if (hitTile.ship && hitTile.ship.isSunk()) {
+      hitAdjacentTiles(hitTile);
     }
     if (!hitTile.ship) {
       playerOne.player.changeTurn();

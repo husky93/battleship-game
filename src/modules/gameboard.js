@@ -7,6 +7,7 @@ const Gameboard = () => {
         const obj = {
           ship: null,
           index: null,
+          orientation: null,
           isHit: false,
           isTaken: false,
           x: j,
@@ -80,6 +81,7 @@ const Gameboard = () => {
     if (emptyTileDown) emptyTileDown.isTaken = true;
     for (let i = 0; i < shipLength; i += 1) {
       const tile = board[y + i][x];
+      tile.orientation = 'vertically';
       tile.ship = ship;
       tile.index = i;
       tile.isTaken = true;
@@ -110,6 +112,7 @@ const Gameboard = () => {
     if (emptyTileRight) emptyTileRight.isTaken = true;
     for (let i = 0; i < shipLength; i += 1) {
       const tile = board[y][x + i];
+      tile.orientation = 'horizontally';
       tile.ship = ship;
       tile.index = i;
       tile.isTaken = true;
