@@ -27,6 +27,24 @@ const Player = (options = {}) => {
     return [tileUp, tileRight, tileDown, tileLeft];
   };
 
+  const hitRandomAdjacentTile = (tile, gameboard, hitTile) => {
+    const tiles = getAdjacentTiles(tile, gameboard);
+    let randomTile = null;
+    tiles.forEach((item) => {
+      if (item !== null && !item.tile.isHit) {
+        randomTile = item.tile;
+      }
+    });
+    if (randomTile !== null && hitTile === null) {
+      gameboard.receiveAttack({
+        x: randomTile.x,
+        y: randomTile.y,
+      });
+      return randomTile;
+    }
+    return null;
+  };
+
   function playMoveAI(gameboard) {
     if (
       gameboard === undefined ||
@@ -47,6 +65,7 @@ const Player = (options = {}) => {
         if (tile.ship) {
           const tiles = getAdjacentTiles(tile, gameboard);
 
+          // Check if any adjacent tile is a hit ship and handle all possible cases (tile up, right, down, left).
           tiles.forEach((item) => {
             if (item !== null && item.tile.isHit && item.tile.ship) {
               const { direction } = item;
@@ -108,36 +127,28 @@ const Player = (options = {}) => {
           });
         }
       });
+
       if (hitTile !== null) {
         hitTilesAI.push(hitTile);
         return { x: hitTile.x, y: hitTile.y };
       }
+
       hitTilesAI.forEach((tile) => {
         if (tile.ship) {
-          const tiles = getAdjacentTiles(tile, gameboard);
-          let randomTile = null;
-          tiles.forEach((item) => {
-            if (item !== null && !item.tile.isHit) {
-              randomTile = item.tile;
-            }
-          });
-          if (randomTile !== null && hitTile === null) {
-            gameboard.receiveAttack({
-              x: randomTile.x,
-              y: randomTile.y,
-            });
-            hitTile = randomTile;
-          }
+          hitTile = hitRandomAdjacentTile(tile, gameboard, hitTile);
         }
       });
+
       if (hitTile !== null) {
         hitTilesAI.push(hitTile);
         return { x: hitTile.x, y: hitTile.y };
       }
+
       const randomTile =
         notHitTiles[Math.floor(Math.random() * notHitTiles.length)];
       gameboard.receiveAttack({ x: randomTile.x, y: randomTile.y });
       hitTilesAI.push(randomTile);
+
       return { x: randomTile.x, y: randomTile.y };
     }
     return null;
