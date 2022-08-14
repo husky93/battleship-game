@@ -132,7 +132,6 @@ const controller = (() => {
     const gameboardTwo = document.querySelector('.gameboard--p2');
     const tiles = gameboardTwo.querySelectorAll('.tile');
     tiles.forEach((tile) => removeTileListeners(tile, game));
-    console.log('game over');
   };
 
   const handleGameOverRender = (msg, btn) => {

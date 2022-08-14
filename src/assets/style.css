@@ -19,6 +19,8 @@
   --grey-light: #c8d0e7;
   --board-color: #383685;
   --white: #fff;
+  --red: #852922;
+  --green: #308553;
   --flipper-height: 50px;
   --flipper-width: 160px;
   --flipper-spacing: 15px;
@@ -163,6 +165,21 @@ body::before {
   height: 40px;
   border-left: 1px var(--primary-light) solid;
   border-top: 1px var(--primary-light) solid;
+  transition: all cubic-bezier(0.86, 0, 0.07, 1) .25s;
+}
+
+.gameboard--p2 .tile {
+  cursor: crosshair;
+}
+
+.gameboard--p2 .tile:hover {
+  background-color: var(--green);
+}
+.gameboard--p2 .tile--hit:hover {
+  background-color: var(--board-color);
+}
+.gameboard--p2 .tile--hitship:hover {
+  background-color: var(--red);
 }
 
 .tile.tile--ship {
@@ -170,11 +187,50 @@ body::before {
 }
 
 .tile.tile--hit {
-  background-color: green;
+  position: relative;
+  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(200, 208, 231, 1);
+  -moz-box-shadow: inset 0px 0px 2px 0px rgba(200, 208, 231, 1);
+  box-shadow: inset 0px 0px 2px 0px rgba(200, 208, 231, 1);
 }
 
 .tile.tile--hitship {
-  background-color: red;
+  position: relative;
+  background-color: var(--red);
+}
+
+.tile::after {
+  content: "";
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 36px;
+  color: var(--white);
+  transform: scale(1.4);
+  transition: opacity cubic-bezier(0.86, 0, 0.07, 1) .25s, transform 0.65s;;
+}
+
+.tile--hitship::after {
+  content: "X";
+  visibility: visible;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.tile--hit::after {
+  content: "✸";
+  visibility: visible;
+  transform: scale(1);
+  opacity: 1;
+  font-size: 14px;
 }
 
 .tile .ship.draggable .ship-tile:nth-child(1)::after {
