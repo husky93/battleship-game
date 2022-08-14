@@ -232,85 +232,92 @@ test('playTurn checks if all ships are hit after the attack and changes gameOver
 test('playTurn hits all adjacent tiles if ship is sunk after hit', () => {
   game.startGame(mockPlacementData);
   let firstShipTile = null;
-  game.playerTwo.gameboard.board[0].every((tile) => {
-    if (tile.ship) {
-      firstShipTile = tile;
-      return false;
-    }
-    return true;
+  game.playerTwo.gameboard.board.some((row) => {
+    row.every((tile) => {
+      if (tile.ship) {
+        firstShipTile = tile;
+        return false;
+      }
+      return true;
+    });
   });
   const { orientation } = firstShipTile;
   const { length } = firstShipTile.ship;
+  const { ship } = firstShipTile;
+  expect(ship.isSunk()).toBe(false);
+  let firstTile = null;
   expect(game.playerOne.player.isMyTurn).toBe(true);
   for (let i = 0; i < length; i += 1) {
     expect(game.playerOne.player.isMyTurn).toBe(true);
     if (orientation.localeCompare('horizontally') === 0) {
-      game.playTurn({ x: firstShipTile.x + i, y: firstShipTile.y });
+      const { index } = firstShipTile;
+      firstTile =
+        index === 0
+          ? firstShipTile
+          : game.playerTwo.gameboard.board[firstShipTile.y][
+              firstShipTile.x - index
+            ];
+      game.playTurn({ x: firstTile.x + i, y: firstTile.y });
     }
     if (orientation.localeCompare('vertically') === 0) {
-      game.playTurn({ x: firstShipTile.x, y: firstShipTile.y + i });
+      const { index } = firstShipTile;
+      firstTile =
+        index === 0
+          ? firstShipTile
+          : game.playerTwo.gameboard.board[firstShipTile.y - index][
+              firstShipTile.x
+            ];
+      game.playTurn({ x: firstTile.x, y: firstTile.y + i });
     }
   }
-  const { ship } = firstShipTile;
   expect(ship.isSunk()).toBe(true);
+  expect(!!firstTile.ship).toBe(true);
+  expect(firstTile.ship.isSunk()).toBe(true);
+  expect(firstTile.isHit).toBe(true);
 
   for (let i = -1; i < length + 1; i += 1) {
     if (orientation.localeCompare('horizontally') === 0) {
       if (
-        firstShipTile.y - 1 >= 0 &&
-        firstShipTile.x + i <= 9 &&
-        firstShipTile.x + i >= 0
+        firstTile.y - 1 >= 0 &&
+        firstTile.x + i <= 9 &&
+        firstTile.x + i >= 0
       ) {
         expect(
-          game.playerTwo.gameboard.board[firstShipTile.y - 1][
-            firstShipTile.x + i
-          ].isHit
+          game.playerTwo.gameboard.board[firstTile.y - 1][firstTile.x + i].isHit
         ).toBe(true);
       }
-      if (firstShipTile.x + i <= 9 && firstShipTile.x + i >= 0) {
+      if (firstTile.x + i <= 9 && firstTile.x + i >= 0) {
         expect(
-          game.playerTwo.gameboard.board[firstShipTile.y][firstShipTile.x + i]
-            .isHit
+          game.playerTwo.gameboard.board[firstTile.y][firstTile.x + i].isHit
         ).toBe(true);
       }
-      if (
-        firstShipTile.y + 1 <= 9 &&
-        firstShipTile.x + i <= 9 &&
-        firstShipTile.x + i >= 0
-      )
+      if (firstTile.y + 1 <= 9 && firstTile.x + i <= 9 && firstTile.x + i >= 0)
         expect(
-          game.playerTwo.gameboard.board[firstShipTile.y + 1][
-            firstShipTile.x + i
-          ].isHit
+          game.playerTwo.gameboard.board[firstTile.y + 1][firstTile.x + i].isHit
         ).toBe(true);
     }
     if (orientation.localeCompare('vertically') === 0) {
       if (
-        firstShipTile.x - 1 >= 0 &&
-        firstShipTile.y + i <= 9 &&
-        firstShipTile.y + i >= 0
+        firstTile.x - 1 >= 0 &&
+        firstTile.y + i <= 9 &&
+        firstTile.y + i >= 0
       ) {
         expect(
-          game.playerTwo.gameboard.board[firstShipTile.y + i][
-            firstShipTile.x - 1
-          ].isHit
+          game.playerTwo.gameboard.board[firstTile.y + i][firstTile.x - 1].isHit
         ).toBe(true);
       }
-      if (firstShipTile.y + i <= 9 && firstShipTile.y + i >= 0) {
+      if (firstTile.y + i <= 9 && firstTile.y + i >= 0) {
         expect(
-          game.playerTwo.gameboard.board[firstShipTile.y + i][firstShipTile.x]
-            .isHit
+          game.playerTwo.gameboard.board[firstTile.y + i][firstTile.x].isHit
         ).toBe(true);
       }
       if (
-        firstShipTile.x + 1 <= 9 &&
-        firstShipTile.y + i <= 9 &&
-        firstShipTile.y + i >= 0
+        firstTile.x + 1 <= 9 &&
+        firstTile.y + i <= 9 &&
+        firstTile.y + i >= 0
       ) {
         expect(
-          game.playerTwo.gameboard.board[firstShipTile.y + i][
-            firstShipTile.x + 1
-          ].isHit
+          game.playerTwo.gameboard.board[firstTile.y + i][firstTile.x + 1].isHit
         ).toBe(true);
       }
     }

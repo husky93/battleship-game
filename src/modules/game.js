@@ -51,9 +51,59 @@ const game = (() => {
     return boardOneOver || boardTwoOver;
   };
 
-  const hitAdjacentTiles = (tile) => {
-    const { x } = tile;
-    const { y } = tile;
+  const hitAdjacentTiles = (tile, gameboard) => {
+    const { orientation } = tile;
+    const { index } = tile;
+    const { ship } = tile;
+    const { length } = ship;
+    if (orientation.localeCompare('horizontally') === 0) {
+      const firstTile =
+        index === 0 ? tile : gameboard.board[tile.y][tile.x - index];
+      const { x } = firstTile;
+      const { y } = firstTile;
+      for (let i = -1; i < length + 1; i += 1) {
+        if (
+          y - 1 >= 0 &&
+          x + i >= 0 &&
+          x + i <= 9 &&
+          !gameboard.board[y - 1][x + i].isHit
+        )
+          gameboard.receiveAttack({ x: x + i, y: y - 1 });
+        if (x + i >= 0 && x + i <= 9 && !gameboard.board[y][x + i].isHit)
+          gameboard.receiveAttack({ x: x + i, y });
+        if (
+          y + 1 <= 9 &&
+          x + i >= 0 &&
+          x + i <= 9 &&
+          !gameboard.board[y + 1][x + i].isHit
+        )
+          gameboard.receiveAttack({ x: x + i, y: y + 1 });
+      }
+    }
+    if (orientation.localeCompare('vertically') === 0) {
+      const firstTile =
+        index === 0 ? tile : gameboard.board[tile.y - index][tile.x];
+      const { x } = firstTile;
+      const { y } = firstTile;
+      for (let i = -1; i < length + 1; i += 1) {
+        if (
+          x - 1 >= 0 &&
+          y + i >= 0 &&
+          y + i <= 9 &&
+          !gameboard.board[y + i][x - 1].isHit
+        )
+          gameboard.receiveAttack({ x: x - 1, y: y + i });
+        if (y + i >= 0 && y + i <= 9 && !gameboard.board[y + i][x].isHit)
+          gameboard.receiveAttack({ x, y: y + i });
+        if (
+          x + 1 <= 9 &&
+          y + i >= 0 &&
+          y + i <= 9 &&
+          !gameboard.board[y + i][x + 1].isHit
+        )
+          gameboard.receiveAttack({ x: x + 1, y: y + i });
+      }
+    }
   };
 
   const playTurn = (coordinates = {}) => {
@@ -84,7 +134,10 @@ const game = (() => {
       return true;
     }
     if (hitTile.ship && hitTile.ship.isSunk()) {
-      hitAdjacentTiles(hitTile);
+      const board = playerOne.player.isMyTurn
+        ? playerTwo.gameboard
+        : playerOne.gameboard;
+      hitAdjacentTiles(hitTile, board);
     }
     if (!hitTile.ship) {
       playerOne.player.changeTurn();
