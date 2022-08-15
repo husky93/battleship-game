@@ -3,9 +3,9 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: './src/index.js',
-  // devServer: {
-  //   static: './dist',
-  // },
+  devServer: {
+    static: './dist',
+  },
   // devtool: 'inline-source-map',
   output: {
     filename: 'main.js',
