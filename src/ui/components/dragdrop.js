@@ -278,6 +278,7 @@ const dragdrop = (() => {
 
   function handleDrop(e) {
     console.log(Array.prototype.slice.call(e.dataTransfer.types));
+    console.log(e.dataTransfer.getData('text/html'));
     e.stopPropagation();
     this.classList.remove('over');
     const x = parseInt(this.dataset.x, 10);
