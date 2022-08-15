@@ -3,7 +3,7 @@ import elementsDOM from './elementsDOM';
 
 const dragdrop = (() => {
   const dragContainer = elementsDOM.createWrapper(['container', 'drag'], 'div');
-  let dragSrcEl;
+  let dragSrcEl = null;
   let mode = 'horizontal';
   let draggingWidth = null;
   let dropped = false;
@@ -184,7 +184,6 @@ const dragdrop = (() => {
       item.classList.remove('over');
     });
     if (e.dataTransfer.dropEffect !== 'none' && dropped) {
-      this.remove();
       if (isAllShipsPlaced()) handleAllShipsPlaced();
     } else if (this.parentElement.classList.contains('tile'))
       toggleActive(this, { add: true });
@@ -277,8 +276,6 @@ const dragdrop = (() => {
   };
 
   function handleDrop(e) {
-    console.log(Array.prototype.slice.call(e.dataTransfer.types));
-    console.log(e.dataTransfer.getData('text/html'));
     e.stopPropagation();
     this.classList.remove('over');
     const x = parseInt(this.dataset.x, 10);
@@ -290,9 +287,8 @@ const dragdrop = (() => {
       !isOutOfBounds(x, y, width)
     ) {
       dropped = true;
-      dragSrcEl.innerHTML = this.innerHTML;
-      this.innerHTML = e.dataTransfer.getData('text/html');
-      const ship = this.firstElementChild;
+      this.appendChild(dragSrcEl);
+      const ship = dragSrcEl;
       toggleActive(ship, { add: true });
       this.firstElementChild.style.opacity = '1';
       this.firstElementChild.style.zIndex = '20';
