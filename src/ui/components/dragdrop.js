@@ -290,7 +290,6 @@ const dragdrop = (() => {
       dropped = true;
       dragSrcEl.innerHTML = this.innerHTML;
       this.innerHTML = e.dataTransfer.getData('text/html');
-      e.dataTransfer.clearData();
       const ship = this.firstElementChild;
       toggleActive(ship, { add: true });
       this.firstElementChild.style.opacity = '1';
