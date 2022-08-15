@@ -103,6 +103,8 @@ const dragdrop = (() => {
     const ships = document.querySelectorAll('.ship');
     const tiles = document.querySelectorAll('.tile');
     const startBtn = document.querySelector('.start');
+    const verticalBtn = document.querySelector('.btn-vertical');
+    const horizBtn = document.querySelector('.btn-horizontal');
     ships.forEach((ship) => {
       ship.remove();
       dragContainer.appendChild(ship);
@@ -115,6 +117,10 @@ const dragdrop = (() => {
       tile.classList.remove('has-ship');
     });
     mode = 'horizontal';
+    if (verticalBtn.classList.contains('active')) {
+      verticalBtn.classList.toggle('active');
+      horizBtn.classList.toggle('active');
+    }
     startBtn.disabled = true;
   };
 

@@ -129,6 +129,7 @@ body::before {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   flex: 1;
@@ -166,11 +167,7 @@ footer {
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  flex: 1;
-}
 
-.rules-wrapper {
-  flex: 1;
 }
 
 .drag {
@@ -179,9 +176,10 @@ footer {
   -moz-box-shadow: 2px 2px 3px 0px rgba(12, 22, 27, 1);
   box-shadow: 2px 2px 3px 0px rgba(12, 22, 27, 1);
   padding: 28px;
-  min-width: 225px;
+  width: 275px;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   gap: 16px;
   flex-grow: 1;
 }
