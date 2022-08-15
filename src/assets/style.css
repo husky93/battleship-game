@@ -317,10 +317,13 @@ footer {
 }
 
 .tile .ship.draggable .ship-tile:nth-child(1)::after {
-  content: "✋";
-  color: var(--primary-light);
+  content: "";
   position: absolute;
   width: 100%;
+  height: 100%;
+  background-image: url(./move.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
