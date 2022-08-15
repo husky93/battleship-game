@@ -2,6 +2,7 @@ import PubSub from 'pubsub-js';
 import createBoard from './components/board';
 import createFlipper from './components/flipper';
 import createHeader from './components/header';
+import createRules from './components/rules';
 import dragdrop from './components/dragdrop';
 import Gameboard from '../modules/gameboard';
 import elementsDOM from './components/elementsDOM';
@@ -22,11 +23,13 @@ const render = (() => {
     const boardWrapper = elementsDOM.createWrapper(['place-wrapper'], 'div');
     const boardPlace = createBoard('place', placeGameboard.board);
     const dragWrapper = elementsDOM.createWrapper(['drag-wrapper'], 'div');
-    const dragInfo = elementsDOM.createParagraph(
-      ['drag-info'],
+    const dragInfo = elementsDOM.createHeading(
+      ['place-info'],
+      'h3',
       'Drag and drop:'
     );
     const dragDrop = dragdrop.createDragDrop(boardPlace);
+    const rulesWrapper = createRules();
     const uiWrapper = elementsDOM.createWrapper(['place-ui'], 'div');
     const orientationToggler = elementsDOM.createWrapper(
       ['container', 'orient-toggler'],
@@ -69,7 +72,7 @@ const render = (() => {
     orientationToggler.append(btnHorizontal, btnVertical);
     uiWrapper.append(btnReset, btnRandom, btnStart);
     dragWrapper.append(dragInfo, dragDrop, orientationToggler);
-    boardWrapper.append(dragWrapper, boardPlace);
+    boardWrapper.append(dragWrapper, boardPlace, rulesWrapper);
     main.append(header, boardWrapper, uiWrapper);
     PubSub.publish('PLACE RENDERED', {
       container: uiWrapper,

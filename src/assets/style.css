@@ -22,6 +22,7 @@
   --red-light: #D14136;
   --red-dark: #451512;
   --red: #852922;
+  --green-light: #47c27a;
   --green: #308553;
   --flipper-height: 50px;
   --flipper-width: 160px;
@@ -122,7 +123,7 @@ body::before {
   align-items: flex-start;
 }
 
-.drag-info {
+.place-info {
   margin: 0;
   font-size: 30px;
 }
@@ -170,6 +171,10 @@ body::before {
   transition: all cubic-bezier(0.86, 0, 0.07, 1) .25s;
 }
 
+.gameboard--place .tile {
+  transition: none;
+}
+
 .gameboard--p2 .tile {
   cursor: crosshair;
 }
@@ -186,8 +191,8 @@ body::before {
 
 .tile.tile--ship {
   background-color: var(--primary);
-  box-shadow: inset 2px 2px 7px var(--primary-light),
-              inset -2px -2px 7px var(--primary-dark);
+  box-shadow: inset 2px 2px 4px var(--primary-light),
+              inset -2px -2px 4px var(--primary-dark);
   border-left: 1px var(--primary-light) solid;
   border-top: 1px var(--primary-light) solid;
 }
@@ -202,8 +207,8 @@ body::before {
 .tile.tile--hitship {
   position: relative;
   background-color: var(--red);
-  box-shadow: inset 2px 2px 7px var(--red-light),
-  inset -2px -2px 7px var(--red-dark);
+  box-shadow: inset 2px 2px 4px var(--red-light),
+  inset -2px -2px 4px var(--red-dark);
 }
 
 .tile::after {
@@ -257,8 +262,8 @@ body::before {
   width: 40px;
   height: 40px;
   background-color: var(--primary);
-  box-shadow: inset 2px 2px 7px var(--primary-light),
-              inset -2px -2px 7px var(--primary-dark);
+  box-shadow: inset 2px 2px 4px var(--primary-light),
+              inset -2px -2px 4px var(--primary-dark);
   border-left: 1px var(--primary-light) solid;
   border-top: 1px var(--primary-light) solid;
   z-index: 20;
@@ -266,8 +271,8 @@ body::before {
 
 .has-ship {
   background-color: var(--primary);
-  box-shadow: inset 2px 2px 7px var(--primary-light),
-              inset -2px -2px 7px var(--primary-dark);
+  box-shadow: inset 2px 2px 4px var(--primary-light),
+              inset -2px -2px 4px var(--primary-dark);
               border-left: 1px var(--primary-light) solid;
               border-top: 1px var(--primary-light) solid;
 }
@@ -355,7 +360,7 @@ body::before {
   width: var(--flipper-width);
   height: var(--flipper-height);
   position: absolute;
-  border: 5px solid black;
+  border: 3px solid black;
   box-sizing: border-box;
   content: attr(title);
   display: flex;
@@ -363,14 +368,14 @@ body::before {
 
 .flipper-card::before {
   background-color: var(--green);
-  border-color: var(--green);
+  border-color: var(--green-light);
   color: var(--white);
   transform: rotateY(0deg) translateZ(calc(var(--flipper-height) / 2));
 }
 
 .flipper-card::after {
   background-color: var(--red);
-  border-color: var(--red);
+  border-color: var(--red-light);
   color: var(--white);
   transform: rotateX(90deg) translateZ(calc(var(--flipper-height) / 2));
 }
