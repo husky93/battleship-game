@@ -2,10 +2,10 @@
 
 Classic Battleship Game web application. This project purpose was to practice [Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) which was used to to test and code core game logic. Made with vanilla JavaScript with use of Publisher/Subscriber pattern to control application events. Tests were written with a help of [jest](https://jestjs.io/) JavaScript Testing Framework.
 
-**Live: [click here](https://husky93.github.io/battleship-game)**
+### Live: [click here](https://husky93.github.io/battleship-game)
 
 ## Features
-- Dynamically generated
+- Dynamically generated DOM
 - Drag and drop place ship UI
 - Horizontal and vertical ship placement
 - 1 Square free space between ships rule
