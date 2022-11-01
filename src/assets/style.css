@@ -147,6 +147,10 @@ footer {
   text-align: center;
 }
 
+.h1 {
+  font-size: 42px;
+}
+
 .footer-link {
   color: var(--primary-light);
 }
@@ -163,11 +167,7 @@ footer {
 }
 
 .drag-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-
+  display: none;
 }
 
 .drag {
@@ -196,6 +196,7 @@ footer {
 
 .place-ui {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   padding: 64px 0;
   gap: 24px;
@@ -228,10 +229,11 @@ footer {
 }
 
 .tile {
+  position: relative;
   background-color: var(--board-color);
   z-index: 1;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   border-left: 1px var(--primary-light) solid;
   border-top: 1px var(--primary-light) solid;
   transition: all cubic-bezier(0.86, 0, 0.07, 1) .25s;
@@ -239,6 +241,7 @@ footer {
 
 .gameboard--place {
   margin: 0 24px;
+  order: 2;
 }
 
 .gameboard--place .tile {
@@ -295,7 +298,7 @@ footer {
   width: 100%;
   height: 100%;
   text-align: center;
-  font-size: 36px;
+  font-size: 24px;
   color: var(--white);
   transform: scale(1.4);
   transition: opacity cubic-bezier(0.86, 0, 0.07, 1) .25s, transform 0.65s;;
@@ -313,27 +316,13 @@ footer {
   visibility: visible;
   transform: scale(1);
   opacity: 1;
-  font-size: 14px;
-}
-
-.tile .ship.draggable .ship-tile:nth-child(1)::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url(./move.svg);
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  top: 50%;
-  transform: translateY(-50%);
-  text-align: center;
-  font-size: 18px;
+  font-size: 11px;
 }
 
 .ship-tile {
   position:relative;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   background-color: var(--primary);
   box-shadow: inset 2px 2px 4px var(--primary-light),
               inset -2px -2px 4px var(--primary-dark);
@@ -373,7 +362,9 @@ footer {
 
 .game-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
   padding: 84px 0;
 }
 
@@ -459,5 +450,75 @@ footer {
 
 .flipper-card.flipped {
   transform: translateZ(calc((-1 * (var(--flipper-height) / 2)))) rotateX(-90deg);
+}
 
+.rules-wrapper {
+  order: 1;
+}
+
+@media screen and (min-width: 769px) {
+  .h1 {
+    font-size: 64px;
+  }
+  .drag-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .rules-wrapper {
+    order: 3;
+  }
+  .tile {
+    width: 30px;
+    height: 30px;
+  }
+  .ship-tile  {
+    width: 30px;
+    height: 30px;
+  }
+  .tile--hit::after {
+    font-size: 12px;
+  }
+  .tile .ship.draggable .ship-tile:nth-child(1)::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(./move.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 18px;
+  }
+  .tile.tile--hitship::after {
+    font-size: 28px;
+  }
+}
+
+@media screen and (min-width: 996px) {
+  .game-wrapper {
+    flex-direction: row;
+    gap: 0;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .tile {
+    width: 40px;
+    height: 40px;
+  }
+  .ship-tile  {
+    width: 40px;
+    height: 40px;
+  }
+  .tile--hit::after {
+    font-size: 14px;
+  }
+  .tile.tile--hitship::after {
+    font-size: 36px;
+  }
 }

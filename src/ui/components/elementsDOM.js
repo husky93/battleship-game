@@ -54,6 +54,7 @@ const elementsDOM = (() => {
     ship.draggable = true;
     for (let i = 0; i < width; i += 1) {
       const shipTile = createWrapper(['ship-tile'], 'div');
+      shipTile.dataset.index = i;
       ship.appendChild(shipTile);
     }
 

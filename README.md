@@ -5,6 +5,7 @@ Classic Battleship Game web application. This project purpose was to practice [T
 **Live: [click here](https://husky93.github.io/battleship-game)**
 
 ## Features
+- Mobile support
 - Dynamically generated
 - Drag and drop place ship UI
 - Horizontal and vertical ship placement
@@ -18,9 +19,6 @@ Classic Battleship Game web application. This project purpose was to practice [T
 - Marks all squares around sunk ship as hit (1 free square space rule)
 - Controls game state each turn and ends game when all ships are sunk on either of the two boards.
 - Restart game option
-
-### To add in the future:
-- Mobile support.
  
 <img src="https://github.com/husky93/battleship-game/blob/main/battleships.png?raw=true"/>
 

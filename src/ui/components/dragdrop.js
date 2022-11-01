@@ -194,11 +194,11 @@ const dragdrop = (() => {
     return false;
   }
 
-  function handleDragEnter(e) {
+  function handleDragEnter() {
     this.classList.add('over');
   }
 
-  function handleDragLeave(e) {
+  function handleDragLeave() {
     this.classList.remove('over');
   }
 
